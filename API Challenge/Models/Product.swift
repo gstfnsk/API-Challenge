@@ -5,6 +5,10 @@
 //  Created by Giulia Stefainski on 13/08/25.
 //
 
+struct ProductResponse: Decodable {
+    var products: [Product]
+}
+
 struct Product: Identifiable, Decodable {
     var id: Int
     var title: String
