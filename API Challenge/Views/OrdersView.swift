@@ -11,7 +11,7 @@ struct OrdersView: View {
     var body: some View {
         
         NavigationStack {
-            EmptyView(
+            EmptyState(
                 title: "No orders yet!",
                 description: "Buy an item and it will show up here.",
                 image: .emptyOrders)

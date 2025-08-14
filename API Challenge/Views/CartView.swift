@@ -11,7 +11,7 @@ struct CartView: View {
     var body: some View {
         
         NavigationStack {
-            EmptyView(
+            EmptyState(
                 title: "Your cart is empty!",
                 description: "Add an item to your cart.",
                 image: .emptyCart)
