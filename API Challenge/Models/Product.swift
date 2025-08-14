@@ -17,4 +17,3 @@ struct Product: Identifiable, Decodable {
     var price: Double
     var thumbnail: String
 }
-
