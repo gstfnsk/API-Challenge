@@ -8,12 +8,15 @@
 import SwiftUI
 
 struct FavoriteIcon: View {
+    
+    @Binding var isFavorite: Bool
+    
     var body: some View {
         
         Button {
-            
+            isFavorite.toggle()
         } label: {
-            Image(systemName: "heart")
+            Image(systemName: isFavorite ? "heart.fill" : "heart")
                 .foregroundColor(.labelsPrimary)
                 .font(.system(.title3, weight: .regular))
                 .padding(8)
@@ -22,9 +25,10 @@ struct FavoriteIcon: View {
                         .foregroundStyle(.fillsTertiary)
                 )
         }
+        .buttonStyle(.plain)
     }
 }
 
 #Preview {
-    FavoriteIcon()
+    FavoriteIcon(isFavorite: .constant(false))
 }

@@ -8,16 +8,48 @@
 import SwiftUI
 
 struct HomeView: View {
+    let columns = [
+        GridItem(.flexible(), spacing: 16),
+        GridItem(.flexible(), spacing: 16)
+    ]
+    
     var body: some View {
-        
         NavigationStack {
-            
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(alignment: .leading, spacing: 16) {
+                    
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Deals of the day")
+                            .foregroundColor(.labelsPrimary)
+                            .font(.system(.title2, weight: .bold))
+                        
+                        ProductCardLarge()
+                    }
+                    
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Top picks")
+                            .foregroundColor(.labelsPrimary)
+                            .font(.system(.title2, weight: .bold))
+                        
+                        LazyVGrid(columns: columns, spacing: 16) {
+                            ProductCardMedium()
+                            ProductCardMedium()
+                            ProductCardMedium()
+                            ProductCardMedium()
+                            ProductCardMedium()
+                            ProductCardMedium()
+                        }
+                    }
+                }
+                .padding(.top)
+                .padding(.horizontal) 
+            }
+            .navigationTitle("Home")
         }
-        .navigationTitle("Home")
-        
     }
 }
 
 #Preview {
     TabBar()
 }
+
