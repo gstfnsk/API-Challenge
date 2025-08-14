@@ -9,6 +9,11 @@ import SwiftUI
 
 struct ProductCardLarge: View {
     
+    var title: String
+    var description: String
+    var price: Double
+    var category: String
+    
     @State var isFavorite = false
     
     var body: some View {
@@ -21,17 +26,17 @@ struct ProductCardLarge: View {
                 
                 VStack (alignment: .leading, spacing: 32) {
                     
-                    Text("CATEGORY")
+                    Text(category)
                         .font(.system(.footnote, weight: .regular))
                         .foregroundColor(.labelsSecondary)
                                         
                     VStack (alignment: .leading, spacing: 4) {
                         
-                        Text("Product name with two or more lines goes here")
+                        Text(title)
                             .font(.system(.subheadline, weight: .regular))
                             .foregroundStyle(.labelsPrimary)
                         
-                        Text("US$ 00,00")
+                        Text("US$ " + String(price))
                             .font(.system(.headline, weight: .semibold))
                             .foregroundStyle(.labelsPrimary)
                     }
@@ -52,5 +57,5 @@ struct ProductCardLarge: View {
 }
 
 #Preview {
-    ProductCardLarge()
+//    ProductCardLarge()
 }

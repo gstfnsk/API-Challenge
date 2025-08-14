@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct HomeView: View {
+    
+    let viewModel: ProductViewModel
+    
     let columns = [
         GridItem(.flexible(), spacing: 16),
         GridItem(.flexible(), spacing: 16)
@@ -22,8 +25,12 @@ struct HomeView: View {
                         Text("Deals of the day")
                             .foregroundColor(.labelsPrimary)
                             .font(.system(.title2, weight: .bold))
-                        
-                        ProductCardLarge()
+                        if let product = viewModel.product {
+                            ProductCardLarge(title: product.title,
+                                             description: product.description,
+                                             price: product.price,
+                                             category: product.category)
+                        }
                     }
                     
                     VStack(alignment: .leading, spacing: 8) {
@@ -32,19 +39,18 @@ struct HomeView: View {
                             .font(.system(.title2, weight: .bold))
                         
                         LazyVGrid(columns: columns, spacing: 16) {
-                            ProductCardMedium()
-                            ProductCardMedium()
-                            ProductCardMedium()
-                            ProductCardMedium()
-                            ProductCardMedium()
-                            ProductCardMedium()
+                            ForEach(viewModel.products.prefix(6)) { product in
+                                ProductCardMedium()
+                            }
                         }
                     }
                 }
                 .padding(.top)
-                .padding(.horizontal) 
+                .padding(.horizontal)
             }
             .navigationTitle("Home")
+        }.task {
+            await viewModel.loadProducts()
         }
     }
 }
