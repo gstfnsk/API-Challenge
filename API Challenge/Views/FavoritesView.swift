@@ -11,9 +11,16 @@ struct FavoritesView: View {
     var body: some View {
         
         NavigationStack {
-            
+            EmptyView(
+                title: "No favorites yet!",
+                description: "Favorite an item and it will show up here.",
+                image: .emptyFavorites)
         }
         .navigationTitle("Favorites")
 
     }
+}
+
+#Preview {
+    FavoritesView()
 }
