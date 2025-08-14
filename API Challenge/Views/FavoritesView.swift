@@ -17,7 +17,6 @@ struct FavoritesView: View {
                 image: .emptyFavorites)
         }
         .navigationTitle("Favorites")
-
     }
 }
 
