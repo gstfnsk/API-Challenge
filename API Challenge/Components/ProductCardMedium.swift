@@ -9,9 +9,11 @@ import SwiftUI
 
 struct ProductCardMedium: View {
     
-    var product: Product
+//    var product: Product
     
-    @State var isFavorite = false
+    @Binding var product: Product
+    
+    //    @State var isFavorite = false
     
     var body: some View {
         
@@ -27,9 +29,10 @@ struct ProductCardMedium: View {
                                     .foregroundStyle(.gray.opacity(0.3))
                             )
                     }
-                        .frame(width: 160, height: 160)
-                        
-                    FavoriteIcon(isFavorite: $isFavorite)
+                    .frame(width: 160, height: 160)
+                    
+                    FavoriteIcon(isFavorite: $product.isFavorite)
+                    
                 }
                 
                 VStack (alignment: .leading, spacing: 4) {
@@ -45,7 +48,7 @@ struct ProductCardMedium: View {
                 
             }
             .padding(8)
-            .frame(width: 178)
+            .frame(width: 178, height: 250)
             .background(
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
                     .fill(.backgroundsSecondary)
@@ -58,5 +61,5 @@ struct ProductCardMedium: View {
 }
 
 #Preview {
-//    ProductCardMedium()
+    //    ProductCardMedium()
 }

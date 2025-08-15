@@ -11,18 +11,18 @@ struct ProductsByCategoryView: View {
     let category: ProductCategory
     
     @State private var searchText: String = ""
-    var viewModel = ProductsByCategoryViewModel()
+    @State var viewModel = ProductsByCategoryViewModel()
     
     private let columns = [GridItem(.adaptive(minimum: 160), spacing: 16)]
     
-    private var filtered: [Product] {
-            let q = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
-            guard !q.isEmpty else { return viewModel.products }
-            return viewModel.products.filter {
-                $0.title.localizedCaseInsensitiveContains(q) ||
-                $0.description.localizedCaseInsensitiveContains(q)
-            }
+    private var filteredBindings: [Binding<Product>] {
+        let q = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        return $viewModel.products.filter { product in
+            q.isEmpty ||
+            product.wrappedValue.title.localizedCaseInsensitiveContains(q) ||
+            product.wrappedValue.description.localizedCaseInsensitiveContains(q)
         }
+    }
     
     var body: some View {
         ScrollView {
@@ -38,8 +38,8 @@ struct ProductsByCategoryView: View {
                 .padding()
             } else {
                 LazyVGrid(columns: columns, spacing: 16) {
-                    ForEach(filtered) { product in
-                        ProductCardMedium(product: product)
+                    ForEach(filteredBindings) { $product in
+                        ProductCardMedium(product: $product)
                     }
                 }
                 .padding(.horizontal)
