@@ -18,8 +18,13 @@ struct DetailsView: View {
             VStack(alignment: .leading, spacing: 16){
                 ZStack (alignment: .topTrailing) {
                     AsyncImage(url: URL(string: product.thumbnail)) { image in
-                        image.resizable()                    } placeholder: {
+                        image.resizable()
+                            .scaledToFit()
+
+                    } placeholder: {
                         Image("ProductPlaceholder")
+                            .resizable()
+                            .scaledToFill()
                             .background(
                                 RoundedRectangle(cornerRadius: 8)
                                     .foregroundStyle(.gray.opacity(0.3))
