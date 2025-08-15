@@ -18,7 +18,7 @@ struct EmptyState: View {
             Image(image)
                 .frame(width: 65, height: 69, alignment: .center)
             VStack(spacing: 16) {
-                Text(title).font(.system(.body, weight: .semibold ))
+                Text(title).font(.system(.body, weight: .semibold )).foregroundColor(Color(.labelsPrimary))
                 Text(description).font(.system(.body, weight: .regular ))
                     .foregroundColor(Color(.labelsSecondary))
             }

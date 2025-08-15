@@ -9,33 +9,75 @@ import SwiftUI
 
 struct ProductList: View {
     
-    var title: String
-    var price: Double
+    var product : Product
+    var image = Image(.productCart)
     var amount: Int?
-    var image: ImageResource
-    var order: Date?
+    var orderDate: String?
     
     var body: some View {
         HStack(spacing: 16) {
-            Image(image)
-                .padding(.vertical, 8)
+            image.padding(.vertical, 8)
                 .padding(.leading, 8)
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(title).font(.system(.footnote, weight: .regular ))
-                        .frame(maxWidth: 157)
-                    Text("US$ " + String(price)).font(.system(.headline, weight: .semibold ))
-                }
-                if let amount {
-                    HStack {
+//            
+//                        Image(product.thumbnail)
+//                            .padding(.vertical, 8)
+//                            .padding(.leading, 8)
+            
+            if let amount {
+                HStack {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(product.title).font(.system(.footnote, weight: .regular )).foregroundColor(Color(.labelsPrimary))
+                            .frame(maxWidth: 157, alignment: .leading)
+                        Text("US$ " + String(product.price)).font(.system(.headline, weight: .semibold )).foregroundColor(Color(.labelsPrimary))
+                    }
+                    
+                    HStack(spacing: 4) {
                         AmountButton(symbolName: "minus", action: ())
                         Text(String(amount))
                         AmountButton(symbolName: "plus", action: ())
                     }
-                    .frame(maxWidth: 70)
+                }.padding(.vertical, 16)
+                    .padding(.trailing, 16)
+                
+            } else if let orderDate {
+                HStack {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(orderDate.uppercased()).font(.system(.caption, weight: .regular )).foregroundColor(.labelsSecondary)
+                        Text(product.title).font(.system(.footnote, weight: .regular )).foregroundColor(Color(.labelsPrimary))
+                            .frame(maxWidth: 157, alignment: .leading)
+                        Text("US$ " + String(product.price)).font(.system(.headline, weight: .semibold ))
+                    }
                 }
-            }.padding(.vertical, 16)
-                .padding(.trailing, 16)
+            } else {
+                HStack {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(product.title).font(.system(.footnote, weight: .regular )).foregroundColor(Color(.labelsPrimary))
+                            .frame(maxWidth: 157, alignment: .leading)
+                        Text("US$ " + String(product.price)).font(.system(.headline, weight: .semibold )).foregroundColor(Color(.labelsPrimary))
+                    }
+                    
+                    Button {
+                        
+                    } label: {
+                        Image(systemName: "cart.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .font(.system(.caption, weight: .regular))
+                            .frame(width: 22, height: 22)
+                        
+                            .foregroundColor(Color(.labelsPrimary))
+                            .frame(width: 38, height: 38)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .foregroundStyle(.fillsTertiary)
+                            )
+                    }
+                    .frame(maxWidth: 70)
+                }.padding(.vertical, 16)
+                    .padding(.trailing, 16)
+            
+            }
+            
         }.background(
             RoundedRectangle(cornerRadius: 16)
                 .foregroundStyle(.backgroundsSecondary)
@@ -44,5 +86,16 @@ struct ProductList: View {
 }
 
 #Preview {
-    ProductList(title: "Product name with two or more lines goes here", price: 6.99, amount: 1, image: .productCart)
+    ProductList(
+        product: Product(
+            id: 1,
+            title: "Apple Watch Series 9",
+            description: "O mais novo Apple Watch com tela Always-On Retina, resistência à água e monitoramento avançado de saúde.",
+            category: "Wearables",
+            price: 3999.99,
+            thumbnail: ""
+        ),
+        amount: 3,
+        orderDate: nil
+    )
 }
