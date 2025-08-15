@@ -26,7 +26,12 @@ struct HomeView: View {
                             .foregroundColor(.labelsPrimary)
                             .font(.system(.title2, weight: .bold))
                         if let product = viewModel.product {
-                            ProductCardLarge(product: product)
+                            NavigationLink {
+                                DetailsView(product: product)
+                            } label: {
+                                ProductCardLarge(product: product)
+                            }
+                            .buttonStyle(.plain)
                         }
                     }
                     
@@ -37,7 +42,12 @@ struct HomeView: View {
                         
                         LazyVGrid(columns: columns, spacing: 16) {
                             ForEach(viewModel.products) { product in
-                                ProductCardMedium(product: product)
+                                NavigationLink {
+                                    DetailsView(product: product)
+                                } label: {
+                                    ProductCardMedium(product: product)
+                                }
+                                .buttonStyle(.plain)
                             }
                         }
                     }
