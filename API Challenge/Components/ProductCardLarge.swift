@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ProductCardLarge: View {
     
+    var product: Product
+    
     @State var isFavorite = false
     
     var body: some View {
@@ -16,22 +18,30 @@ struct ProductCardLarge: View {
         ZStack (alignment: .topTrailing) {
             HStack (spacing: 16) {
                 
-                Image("ProductPlaceholder")
+                AsyncImage(url: URL(string: product.thumbnail)) { image in
+                    image.resizable()
+                } placeholder: {
+                    Image("ProductPlaceholder")
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .foregroundStyle(.gray.opacity(0.3))
+                        )
+                }
                     .frame(width: 160, height: 160)
                 
                 VStack (alignment: .leading, spacing: 32) {
                     
-                    Text("CATEGORY")
+                    Text(product.category)
                         .font(.system(.footnote, weight: .regular))
                         .foregroundColor(.labelsSecondary)
                                         
                     VStack (alignment: .leading, spacing: 4) {
                         
-                        Text("Product name with two or more lines goes here")
+                        Text(product.title)
                             .font(.system(.subheadline, weight: .regular))
                             .foregroundStyle(.labelsPrimary)
                         
-                        Text("US$ 00,00")
+                        Text("US$ " + String(product.price))
                             .font(.system(.headline, weight: .semibold))
                             .foregroundStyle(.labelsPrimary)
                     }
@@ -52,5 +62,5 @@ struct ProductCardLarge: View {
 }
 
 #Preview {
-    ProductCardLarge()
+//    ProductCardLarge()
 }
