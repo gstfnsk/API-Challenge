@@ -18,7 +18,15 @@ struct ProductCardLarge: View {
         ZStack (alignment: .topTrailing) {
             HStack (spacing: 16) {
                 
-                Image("ProductPlaceholder")
+                AsyncImage(url: URL(string: product.thumbnail)) { image in
+                    image.resizable()
+                } placeholder: {
+                    Image("ProductPlaceholder")
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .foregroundStyle(.gray.opacity(0.3))
+                        )
+                }
                     .frame(width: 160, height: 160)
                 
                 VStack (alignment: .leading, spacing: 32) {

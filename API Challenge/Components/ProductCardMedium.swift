@@ -18,7 +18,15 @@ struct ProductCardMedium: View {
         ZStack (alignment: .topTrailing) {
             VStack (spacing: 16) {
                 ZStack (alignment: .topTrailing) {
-                    Image("ProductPlaceholder")
+                    AsyncImage(url: URL(string: product.thumbnail)) { image in
+                        image.resizable()
+                    } placeholder: {
+                        Image("ProductPlaceholder")
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .foregroundStyle(.gray.opacity(0.3))
+                            )
+                    }
                         .frame(width: 160, height: 160)
                         
                     FavoriteIcon(isFavorite: $isFavorite)
