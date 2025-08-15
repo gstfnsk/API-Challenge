@@ -25,8 +25,11 @@ struct CategoriesView: View {
             VStack(spacing: 16) {
                 HStack {
                     ForEach(featured) { category in
-                        CategoryIcon(name: category.displayName, image: category.imageName)
-                            .frame(maxWidth: .infinity)
+                        NavigationLink(value: category) {
+                            CategoryIcon(name: category.displayName, image: category.imageName)
+                                .frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
                 .padding(.horizontal)
@@ -48,7 +51,9 @@ struct CategoriesView: View {
                         .listRowSeparator(.hidden)
                     } else {
                         ForEach(filtered) { category in
-                            CategoryRow(name: category.displayName)
+                            NavigationLink(value: category) {
+                                CategoryRow(name: category.displayName)
+                            }
                         }
                     }
                 }
@@ -58,6 +63,9 @@ struct CategoriesView: View {
                 .refreshable { await viewModel.loadCategories() }
             }
             .navigationTitle("Categories")
+            .navigationDestination(for: ProductCategory.self) { category in
+                ProductsByCategoryView(category: category)
+            }
         }
     }
 }

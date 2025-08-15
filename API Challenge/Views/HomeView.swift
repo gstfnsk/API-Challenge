@@ -36,7 +36,7 @@ struct HomeView: View {
                             .font(.system(.title2, weight: .bold))
                         
                         LazyVGrid(columns: columns, spacing: 16) {
-                            ForEach(viewModel.products.prefix(6)) { product in
+                            ForEach(viewModel.products) { product in
                                 ProductCardMedium(product: product)
                             }
                         }

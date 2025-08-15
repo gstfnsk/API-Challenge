@@ -8,4 +8,5 @@
 protocol ProductServiceProtocol {
     func fetchProduct(number: Int) async throws -> Product
     func fetchProducts() async throws -> [Product]
+    func fetchProducts(in category: ProductCategory, limit: Int, skip: Int) async throws -> [Product]
 }
