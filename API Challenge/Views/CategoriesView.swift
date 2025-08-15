@@ -9,7 +9,8 @@ import SwiftUI
 
 struct CategoriesView: View {
     @State private var searchText: String = ""
-    @State private var viewModel = CategoryViewModel()
+    
+    @State var viewModel: CategoryViewModel
     
     private let featured: [ProductCategory] = [.beauty, .laptops, .tablets, .groceries]
     
