@@ -17,9 +17,6 @@ struct CategoryRow: View {
                 .font(.system(.body, weight: .regular))
             
             Spacer()
-            
-            Image(systemName: "chevron.right")
-                .foregroundColor(.labelsTertiary)
         }
         .padding(.vertical, 19)
         
