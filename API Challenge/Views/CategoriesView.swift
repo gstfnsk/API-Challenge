@@ -8,17 +8,57 @@
 import SwiftUI
 
 struct CategoriesView: View {
-    
     @State private var searchText: String = ""
     
+    @State var viewModel: CategoryViewModel
+    
+    private let featured: [ProductCategory] = [.beauty, .laptops, .tablets, .groceries]
+    
+    private var filtered: [ProductCategory] {
+        let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !query.isEmpty else { return viewModel.categories }
+        return viewModel.categories.filter { $0.displayName.localizedCaseInsensitiveContains(query) }
+    }
+    
     var body: some View {
-        
         NavigationStack {
-            
+            VStack(spacing: 16) {
+                HStack {
+                    ForEach(featured) { category in
+                        CategoryIcon(name: category.displayName, image: category.imageName)
+                            .frame(maxWidth: .infinity)
+                    }
+                }
+                .padding(.horizontal)
+                
+                List {
+                    if viewModel.isLoading {
+                        HStack {
+                            Spacer()
+                            ProgressView()
+                            Spacer()
+                        }
+                    } else if let error = viewModel.errorMessage {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Couldn't load categories").font(.headline)
+                            Text(error).font(.footnote).foregroundStyle(.secondary)
+                            Button("Try Again") { Task { await viewModel.loadCategories() } }
+                                .buttonStyle(.borderedProminent)
+                        }
+                        .listRowSeparator(.hidden)
+                    } else {
+                        ForEach(filtered) { category in
+                            CategoryRow(name: category.displayName)
+                        }
+                    }
+                }
+                .listStyle(.plain)
+                .searchable(text: $searchText)
+                .task { await viewModel.loadCategories() }
+                .refreshable { await viewModel.loadCategories() }
+            }
+            .navigationTitle("Categories")
         }
-        .searchable(text: $searchText)
-        .navigationTitle("Categories")
-        
     }
 }
 
