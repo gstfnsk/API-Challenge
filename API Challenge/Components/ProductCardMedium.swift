@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ProductCardMedium: View {
     
+    var product: Product
+    
     @State var isFavorite = false
     
     var body: some View {
@@ -23,11 +25,11 @@ struct ProductCardMedium: View {
                 }
                 
                 VStack (alignment: .leading, spacing: 4) {
-                    Text("Product name with two or more lines goes here")
+                    Text(product.title)
                         .font(.system(.subheadline, weight: .regular))
                         .foregroundStyle(.labelsPrimary)
                     
-                    Text("US$ 00,00")
+                    Text("US$ " + String(product.price))
                         .font(.system(.headline, weight: .semibold))
                         .foregroundStyle(.labelsPrimary)
                 }
@@ -48,5 +50,5 @@ struct ProductCardMedium: View {
 }
 
 #Preview {
-    ProductCardMedium()
+//    ProductCardMedium()
 }

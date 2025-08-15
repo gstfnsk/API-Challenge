@@ -26,10 +26,7 @@ struct HomeView: View {
                             .foregroundColor(.labelsPrimary)
                             .font(.system(.title2, weight: .bold))
                         if let product = viewModel.product {
-                            ProductCardLarge(title: product.title,
-                                             description: product.description,
-                                             price: product.price,
-                                             category: product.category)
+                            ProductCardLarge(product: product)
                         }
                     }
                     
@@ -40,7 +37,7 @@ struct HomeView: View {
                         
                         LazyVGrid(columns: columns, spacing: 16) {
                             ForEach(viewModel.products.prefix(6)) { product in
-                                ProductCardMedium()
+                                ProductCardMedium(product: product)
                             }
                         }
                     }
