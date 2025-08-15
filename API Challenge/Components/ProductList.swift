@@ -26,9 +26,9 @@ struct ProductList: View {
             if let amount {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(product.title).font(.system(.footnote, weight: .regular ))
+                        Text(product.title).font(.system(.footnote, weight: .regular )).foregroundColor(Color(.labelsPrimary))
                             .frame(maxWidth: 157, alignment: .leading)
-                        Text("US$ " + String(product.price)).font(.system(.headline, weight: .semibold ))
+                        Text("US$ " + String(product.price)).font(.system(.headline, weight: .semibold )).foregroundColor(Color(.labelsPrimary))
                     }
                     
                     HStack(spacing: 4) {
@@ -43,7 +43,7 @@ struct ProductList: View {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(orderDate.uppercased()).font(.system(.caption, weight: .regular )).foregroundColor(.labelsSecondary)
-                        Text(product.title).font(.system(.footnote, weight: .regular ))
+                        Text(product.title).font(.system(.footnote, weight: .regular )).foregroundColor(Color(.labelsPrimary))
                             .frame(maxWidth: 157, alignment: .leading)
                         Text("US$ " + String(product.price)).font(.system(.headline, weight: .semibold ))
                     }
@@ -51,9 +51,9 @@ struct ProductList: View {
             } else {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(product.title).font(.system(.footnote, weight: .regular ))
+                        Text(product.title).font(.system(.footnote, weight: .regular )).foregroundColor(Color(.labelsPrimary))
                             .frame(maxWidth: 157, alignment: .leading)
-                        Text("US$ " + String(product.price)).font(.system(.headline, weight: .semibold ))
+                        Text("US$ " + String(product.price)).font(.system(.headline, weight: .semibold )).foregroundColor(Color(.labelsPrimary))
                     }
                     
                     Button {
