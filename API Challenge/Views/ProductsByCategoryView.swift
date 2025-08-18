@@ -39,7 +39,9 @@ struct ProductsByCategoryView: View {
             } else {
                 LazyVGrid(columns: columns, spacing: 16) {
                     ForEach(filteredBindings) { $product in
-                        ProductCardMedium(product: $product)
+                        NavigationLink(destination: DetailsView(product: $product).toolbar(.hidden, for: .tabBar)){
+                            ProductCardMedium(product: $product)
+                        }
                     }
                 }
                 .padding(.horizontal)

@@ -9,19 +9,28 @@ import SwiftUI
 
 struct ProductList: View {
     
+//    @Binding var product : Product
+    
     var product : Product
-    var image = Image(.productCart)
     var amount: Int?
     var orderDate: String?
     
     var body: some View {
         HStack(spacing: 16) {
-            image.padding(.vertical, 8)
-                .padding(.leading, 8)
-//            
-//                        Image(product.thumbnail)
-//                            .padding(.vertical, 8)
-//                            .padding(.leading, 8)
+            
+            AsyncImage(url: URL(string: product.thumbnail)) { image in
+                image.resizable()
+            } placeholder: {
+                Image("ProductPlaceholder")
+                    .resizable()
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .foregroundStyle(.gray.opacity(0.3))
+                    )
+            }
+                .frame(width: 78, height: 78)
+                .padding(.vertical, 8)
+                    .padding(.leading, 8)
             
             if let amount {
                 HStack {
@@ -93,9 +102,11 @@ struct ProductList: View {
             description: "O mais novo Apple Watch com tela Always-On Retina, resistência à água e monitoramento avançado de saúde.",
             category: "Wearables",
             price: 3999.99,
-            thumbnail: ""
+            thumbnail: "",
+            isFavorite: false,
+            amountOnCart: 0
         ),
-        amount: 3,
+        amount: nil,
         orderDate: nil
     )
 }
