@@ -20,35 +20,35 @@ struct HomeView: View {
         NavigationStack {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 16) {
-                    
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Deals of the day")
                             .foregroundColor(.labelsPrimary)
                             .font(.system(.title2, weight: .bold))
-                        if let product = viewModel.product {
-                            NavigationLink {
-                                DetailsView(product: product)
-                            } label: {
-                                ProductCardLarge(product: product)
-                            }
-                            .buttonStyle(.plain)
-
-                        }
-                        
-                        LazyVGrid(columns: columns, spacing: 16) {
-                            ForEach(viewModel.products) { product in
-                                NavigationLink {
-                                    DetailsView(product: product)
-                                } label: {
-                                    ProductCardMedium(product: product)
-                                }
-                                .buttonStyle(.plain)
-                            }
+                        if let product = viewModel.product,
+                           let i = viewModel.products.firstIndex(where: { $0.id == product.id }) {
+                            ProductCardLarge(product: $viewModel.products[i])
                         }
                     }
-                    .padding(.top)
-                    .padding(.horizontal)
+
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Top picks")
+                                .foregroundColor(.labelsPrimary)
+                                .font(.system(.title2, weight: .bold))
+                            
+                            LazyVGrid(columns: columns, spacing: 8) {
+                                ForEach(viewModel.products.indices, id: \.self) { i in
+                                    NavigationLink {
+                                        DetailsView(product: viewModel.products[i])
+                                    } label: {
+                                        ProductCardMedium(product: $viewModel.products[i])
+                                    }
+                                }
+                            }
+                        }
+                    
                 }
+                .padding(.top)
+                .padding(.horizontal)
                 .navigationTitle("Home")
             }.task {
                 await viewModel.loadProducts()

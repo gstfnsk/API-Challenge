@@ -5,14 +5,16 @@
 //  Created by Enzo Tonatto on 15/08/25.
 //
 
+// ProductsByCategoryView.swift
 import SwiftUI
 
 struct ProductsByCategoryView: View {
-    @Bindable var viewModel = ProductsByCategoryViewModel()
+    @Bindable var viewModel = ProductsByCategoryViewModel()   
     let category: ProductCategory
     let columns = [GridItem(.adaptive(minimum: 160), spacing: 16)]
     
     var body: some View {
+
         ScrollView {
             if viewModel.isLoading {
                 ProgressView().padding()
@@ -27,13 +29,23 @@ struct ProductsByCategoryView: View {
             } else {
                 LazyVGrid(columns: columns, spacing: 16) {
                     ForEach(viewModel.filteredProducts) { product in
-                        NavigationLink {
-                                DetailsView(product: product)
+                        // tenta achar o índice correspondente na fonte de verdade
+                        if let i = viewModel.products.firstIndex(where: { $0.id == product.id }) {
+                            NavigationLink {
+                                DetailsView(product: viewModel.products[i])
                             } label: {
-                                ProductCardMedium(product: product)
+                                ProductCardMedium(product: $viewModel.products[i]) // Binding<Product>
                             }
                             .buttonStyle(.plain)
-
+                        } else {
+                            // fallback: item não está na lista principal (somente leitura)
+                            NavigationLink {
+                                DetailsView(product: product)
+                            } label: {
+                                ProductCardMedium(product: .constant(product))
+                            }
+                            .buttonStyle(.plain)
+                        }
                     }
                 }
                 .padding(.horizontal)
@@ -49,9 +61,7 @@ struct ProductsByCategoryView: View {
         .navigationBarTitleDisplayMode(.inline)
         .task { await viewModel.load(category: category) }
         .refreshable { await viewModel.load(category: category) }
-        .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(.visible, for: .navigationBar)
-
     }
 }
 
