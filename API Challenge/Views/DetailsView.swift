@@ -9,9 +9,7 @@ import SwiftUI
 
 struct DetailsView: View {
     
-    var product: Product
-    
-    @State var isFavorite = false
+    @Binding var product: Product
     
     var body: some View {
         ScrollView {
@@ -32,7 +30,7 @@ struct DetailsView: View {
                     }
                     .frame(width: 361, height: 361)
                     
-                    FavoriteIcon(isFavorite: $isFavorite)
+                    FavoriteIcon(isFavorite: $product.isFavorite)
                 }
                 VStack(alignment: .leading, spacing: 4) {
                     Text(product.title).foregroundColor(Color(.labelsPrimary))
@@ -52,12 +50,12 @@ struct DetailsView: View {
 }
 
 #Preview {
-    DetailsView(product: Product(
-        id: 1,
-        title: "Apple Watch Series 9",
-        description: "O mais novo Apple Watch com tela Always-On Retina, resistência à água e monitoramento avançado de saúde.",
-        category: "Wearables",
-        price: 3999.99,
-        thumbnail: ""
-    ))
+//    DetailsView(product: Product(
+//        id: 1,
+//        title: "Apple Watch Series 9",
+//        description: "O mais novo Apple Watch com tela Always-On Retina, resistência à água e monitoramento avançado de saúde.",
+//        category: "Wearables",
+//        price: 3999.99,
+//        thumbnail: ""
+//    ))
 }

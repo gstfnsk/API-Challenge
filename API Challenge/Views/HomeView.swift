@@ -26,7 +26,9 @@ struct HomeView: View {
                             .foregroundColor(.labelsPrimary)
                             .font(.system(.title2, weight: .bold))
                         if !viewModel.products.isEmpty {
-                            ProductCardLarge(product: $viewModel.products[0])
+                            NavigationLink(destination: DetailsView(product: $viewModel.products[0]).toolbar(.hidden, for: .tabBar)){
+                                ProductCardLarge(product: $viewModel.products[0])
+                            }
                         }
                         
                         VStack(alignment: .leading, spacing: 8) {
@@ -36,7 +38,9 @@ struct HomeView: View {
                             
                             LazyVGrid(columns: columns, spacing: 16) {
                                 ForEach($viewModel.products) { $product in
-                                    ProductCardMedium(product: $product)
+                                    NavigationLink(destination: DetailsView(product: $product).toolbar(.hidden, for: .tabBar)){
+                                        ProductCardMedium(product: $product)
+                                    }
                                 }
                             }
                         }
