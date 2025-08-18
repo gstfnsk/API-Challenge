@@ -10,6 +10,7 @@ import Foundation
 @Observable
 final class ProductsByCategoryViewModel: ProductsByCategoryViewModelProtocol {
     var products: [Product] = []
+    var searchText: String = "" 
     var isLoading: Bool = false
     var errorMessage: String?
     
@@ -17,6 +18,12 @@ final class ProductsByCategoryViewModel: ProductsByCategoryViewModelProtocol {
     
     init(service: ProductServiceProtocol = ProductService()) {
         self.service = service
+    }
+    
+    var filteredProducts: [Product] {
+        let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !query.isEmpty else { return products }
+        return products.filter { $0.title.localizedStandardContains(query) }
     }
     
     func load(category: ProductCategory, limit: Int = 24, skip: Int = 0) async {

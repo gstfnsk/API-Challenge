@@ -8,18 +8,9 @@
 import SwiftUI
 
 struct CategoriesView: View {
-    @State private var searchText: String = ""
-    
-    let viewModel: CategoryViewModel
-    
-    private let featured: [ProductCategory] = [.beauty, .laptops, .tablets, .groceries]
-    
-    private var filtered: [ProductCategory] {
-        let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !query.isEmpty else { return viewModel.categories }
-        return viewModel.categories.filter { $0.displayName.localizedCaseInsensitiveContains(query) }
-    }
-    
+    @State private var featured: [ProductCategory] = [.beauty, .laptops, .tablets, .groceries]
+    @Bindable var viewModel: CategoryViewModel
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 16) {
@@ -33,24 +24,21 @@ struct CategoriesView: View {
                     }
                 }
                 .padding(.horizontal)
-                
+
                 List {
-                    if viewModel.isLoading {
-                        HStack {
-                            Spacer()
-                            ProgressView()
-                            Spacer()
-                        }
-                    } else if let error = viewModel.errorMessage {
+                    switch viewModel.uiState {
+                    case .loading:
+                        HStack { Spacer(); ProgressView(); Spacer() }
+                    case .error(let msg):
                         VStack(alignment: .leading, spacing: 8) {
                             Text("Couldn't load categories").font(.headline)
-                            Text(error).font(.footnote).foregroundStyle(.secondary)
+                            Text(msg).font(.footnote).foregroundStyle(.secondary)
                             Button("Try Again") { Task { await viewModel.loadCategories() } }
                                 .buttonStyle(.borderedProminent)
                         }
                         .listRowSeparator(.hidden)
-                    } else {
-                        ForEach(filtered) { category in
+                    case .loaded:
+                        ForEach(viewModel.filteredCategories) { category in
                             NavigationLink(value: category) {
                                 CategoryRow(name: category.displayName)
                             }
@@ -58,7 +46,7 @@ struct CategoriesView: View {
                     }
                 }
                 .listStyle(.plain)
-                .searchable(text: $searchText)
+                .searchable(text: $viewModel.searchText) 
                 .task { await viewModel.loadCategories() }
                 .refreshable { await viewModel.loadCategories() }
             }
