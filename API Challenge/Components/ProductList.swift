@@ -16,12 +16,19 @@ struct ProductList: View {
     
     var body: some View {
         HStack(spacing: 16) {
-            image.padding(.vertical, 8)
-                .padding(.leading, 8)
-//            
-//                        Image(product.thumbnail)
-//                            .padding(.vertical, 8)
-//                            .padding(.leading, 8)
+            AsyncImage(url: URL(string: product.thumbnail)) { image in
+                image.resizable()
+            } placeholder: {
+                Image("ProductPlaceholder")
+                    .resizable()
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .foregroundStyle(.gray.opacity(0.3))
+                    )
+            }
+            .frame(width: 78, height: 78)
+            .padding(.vertical, 8)
+            .padding(.leading, 8)
             
             if let amount {
                 HStack {
@@ -75,7 +82,7 @@ struct ProductList: View {
                     .frame(maxWidth: 70)
                 }.padding(.vertical, 16)
                     .padding(.trailing, 16)
-            
+                
             }
             
         }.background(
@@ -93,7 +100,8 @@ struct ProductList: View {
             description: "O mais novo Apple Watch com tela Always-On Retina, resistência à água e monitoramento avançado de saúde.",
             category: "Wearables",
             price: 3999.99,
-            thumbnail: ""
+            thumbnail: "",
+            isFavorite: false,
         ),
         amount: 3,
         orderDate: nil
