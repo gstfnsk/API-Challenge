@@ -104,7 +104,7 @@ struct ProductList: View {
             price: 3999.99,
             thumbnail: "",
             isFavorite: false,
-            amountOnCart: 0
+//            amountOnCart: 0
         ),
         amount: nil,
         orderDate: nil
