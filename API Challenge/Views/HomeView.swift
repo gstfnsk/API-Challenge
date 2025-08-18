@@ -25,7 +25,9 @@ struct HomeView: View {
                         Text("Deals of the day")
                             .foregroundColor(.labelsPrimary)
                             .font(.system(.title2, weight: .bold))
-                        ProductCardLarge(product: $viewModel.products[0])
+                        if !viewModel.products.isEmpty {
+                            ProductCardLarge(product: $viewModel.products[0])
+                        }
                         
                         VStack(alignment: .leading, spacing: 8) {
                             Text("Top picks")
@@ -49,8 +51,8 @@ struct HomeView: View {
         }
     }
 }
-    
-    #Preview {
-        TabBar()
-    }
-    
+
+#Preview {
+    TabBar()
+}
+
