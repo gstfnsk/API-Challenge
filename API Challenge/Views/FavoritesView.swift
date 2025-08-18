@@ -8,18 +8,32 @@
 import SwiftUI
 
 struct FavoritesView: View {
+    
+    @State var viewModel: ProductViewModel
+    var isEmpty: Bool = false
+    
     var body: some View {
         
+        
         NavigationStack {
-            EmptyState(
-                title: "No favorites yet!",
-                description: "Favorite an item and it will show up here.",
-                image: .emptyFavorites)
+            if (isEmpty) {
+                EmptyState(
+                    title: "No favorites yet!",
+                    description: "Favorite an item and it will show up here.",
+                    image: .emptyFavorites)
+            }
+            else {
+                VStack {
+                    ForEach(viewModel.favoritedProducts()) { product in
+                        ProductList(product: product, amount: nil, orderDate: nil)
+                    }
+                }
+            }
         }
         .navigationTitle("Favorites")
     }
 }
 
 #Preview {
-    FavoritesView()
+    FavoritesView(viewModel: ProductViewModel(service: ProductService()))
 }

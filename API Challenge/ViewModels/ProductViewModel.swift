@@ -33,4 +33,11 @@ class ProductViewModel: ProductViewModelProtocol {
         isLoading = false
     }
     
+    func favoritedProducts() -> [Product] {
+        products.filter { $0.isFavorite }
+    }
+    
+//    func productsInCart(products: [Product]) -> {
+//        
+//    }
 }

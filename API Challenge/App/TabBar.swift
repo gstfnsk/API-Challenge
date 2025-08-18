@@ -32,7 +32,7 @@ struct TabBar: View {
             
             Tab("Favorites", systemImage: "heart.fill") {
                 NavigationStack {
-                    FavoritesView()
+                    FavoritesView(viewModel: ProductViewModel(service: ProductService()))
                 }
             }
             
