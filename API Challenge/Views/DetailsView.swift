@@ -44,11 +44,13 @@ struct DetailsView: View {
                     .font(.system(.body, weight: .regular ))
             }
         }
+        .toolbar(.hidden, for: .tabBar)
         .padding(.vertical, 16)
         .padding(.horizontal, 16)
         Spacer()
         ButtonComponent(title: "Add to cart", action: ())
     }
+    
 }
 
 #Preview {

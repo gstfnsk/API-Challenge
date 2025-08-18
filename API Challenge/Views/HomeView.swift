@@ -25,19 +25,24 @@ struct HomeView: View {
                         Text("Deals of the day")
                             .foregroundColor(.labelsPrimary)
                             .font(.system(.title2, weight: .bold))
-                        if !viewModel.products.isEmpty {
-                            ProductCardLarge(product: $viewModel.products[0])
+                        if let product = viewModel.product {
+                            NavigationLink {
+                                DetailsView(product: product)
+                            } label: {
+                                ProductCardLarge(product: product)
+                            }
+                            .buttonStyle(.plain)
+
                         }
                         
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Top picks")
-                                .foregroundColor(.labelsPrimary)
-                                .font(.system(.title2, weight: .bold))
-                            
-                            LazyVGrid(columns: columns, spacing: 16) {
-                                ForEach($viewModel.products) { $product in
-                                    ProductCardMedium(product: $product)
+                        LazyVGrid(columns: columns, spacing: 16) {
+                            ForEach(viewModel.products) { product in
+                                NavigationLink {
+                                    DetailsView(product: product)
+                                } label: {
+                                    ProductCardMedium(product: product)
                                 }
+                                .buttonStyle(.plain)
                             }
                         }
                     }

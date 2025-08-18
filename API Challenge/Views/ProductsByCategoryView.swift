@@ -8,21 +8,9 @@
 import SwiftUI
 
 struct ProductsByCategoryView: View {
+    @Bindable var viewModel = ProductsByCategoryViewModel()
     let category: ProductCategory
-    
-    @State private var searchText: String = ""
-    @State var viewModel = ProductsByCategoryViewModel()
-    
-    private let columns = [GridItem(.adaptive(minimum: 160), spacing: 16)]
-    
-    private var filteredBindings: [Binding<Product>] {
-        let q = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
-        return $viewModel.products.filter { product in
-            q.isEmpty ||
-            product.wrappedValue.title.localizedCaseInsensitiveContains(q) ||
-            product.wrappedValue.description.localizedCaseInsensitiveContains(q)
-        }
-    }
+    let columns = [GridItem(.adaptive(minimum: 160), spacing: 16)]
     
     var body: some View {
         ScrollView {
@@ -38,8 +26,14 @@ struct ProductsByCategoryView: View {
                 .padding()
             } else {
                 LazyVGrid(columns: columns, spacing: 16) {
-                    ForEach(filteredBindings) { $product in
-                        ProductCardMedium(product: $product)
+                    ForEach(viewModel.filteredProducts) { product in
+                        NavigationLink {
+                                DetailsView(product: product)
+                            } label: {
+                                ProductCardMedium(product: product)
+                            }
+                            .buttonStyle(.plain)
+
                     }
                 }
                 .padding(.horizontal)
@@ -47,7 +41,7 @@ struct ProductsByCategoryView: View {
             }
         }
         .searchable(
-            text: $searchText,
+            text: $viewModel.searchText,
             placement: .navigationBarDrawer(displayMode: .always),
             prompt: "Search"
         )

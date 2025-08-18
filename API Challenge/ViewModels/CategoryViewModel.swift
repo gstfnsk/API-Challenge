@@ -7,28 +7,40 @@
 
 import Foundation
 
+@MainActor
 @Observable
 final class CategoryViewModel: CategoryViewModelProtocol {
     var categories: [ProductCategory] = []
-    var isLoading: Bool = false
-    var errorMessage: String?
-    
+    var searchText: String = "" {
+        didSet { updateDerivedState() }
+    }
+    var uiState: CategoryUIState = .loading
+
     private let service: CategoryServiceProtocol
-    
+
     init(service: CategoryServiceProtocol = CategoryService()) {
         self.service = service
     }
-    
+
+    var filteredCategories: [ProductCategory] {
+        let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !query.isEmpty else { return categories }
+        return categories.filter { $0.displayName.localizedCaseInsensitiveContains(query) }
+    }
+
     func loadCategories() async {
-        isLoading = true
-        defer { isLoading = false }
+        uiState = .loading
         do {
             categories = try await service.fetchCategories()
-            errorMessage = nil
+            updateDerivedState()
         } catch {
             categories = []
-            errorMessage = "Error to fetch Categories: \(error.localizedDescription)"
+            uiState = .error("Error to fetch Categories: \(error.localizedDescription)")
         }
+    }
+
+    private func updateDerivedState() {
+        uiState = categories.isEmpty ? .loaded(isEmpty: true) : .loaded(isEmpty: filteredCategories.isEmpty)
     }
 }
 
