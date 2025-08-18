@@ -10,7 +10,7 @@ import SwiftUI
 struct DetailsView: View {
     
     var product: Product
-    
+//    @Binding var product: Product
     @State var isFavorite = false
     
     var body: some View {
@@ -33,6 +33,7 @@ struct DetailsView: View {
                     .frame(width: 361, height: 361)
                     
                     FavoriteIcon(isFavorite: $isFavorite)
+//                    FavoriteIcon(isFavorite: $product.isFavorite)
                 }
                 VStack(alignment: .leading, spacing: 4) {
                     Text(product.title).foregroundColor(Color(.labelsPrimary))
