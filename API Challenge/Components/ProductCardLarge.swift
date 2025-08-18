@@ -13,8 +13,8 @@ struct ProductCardLarge: View {
     
     var body: some View {
         
-        ZStack (alignment: .topTrailing) {
-            HStack (spacing: 16) {
+        ZStack(alignment: .topTrailing) {
+            HStack(spacing: 16) {
                 
                 AsyncImage(url: URL(string: product.thumbnail)) { image in
                     image.resizable()
@@ -27,13 +27,13 @@ struct ProductCardLarge: View {
                 }
                     .frame(width: 160, height: 160)
                 
-                VStack (alignment: .leading, spacing: 32) {
+                VStack(alignment: .leading, spacing: 32) {
                     
                     Text(product.category)
                         .font(.system(.footnote, weight: .regular))
                         .foregroundColor(.labelsSecondary)
                                         
-                    VStack (alignment: .leading, spacing: 4) {
+                    VStack(alignment: .leading, spacing: 4) {
                         
                         Text(product.title)
                             .font(.system(.subheadline, weight: .regular))
