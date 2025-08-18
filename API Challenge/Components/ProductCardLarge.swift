@@ -9,9 +9,7 @@ import SwiftUI
 
 struct ProductCardLarge: View {
     
-    var product: Product
-    
-    @State var isFavorite = false
+    @Binding var product: Product
     
     var body: some View {
         
@@ -54,10 +52,9 @@ struct ProductCardLarge: View {
                     .fill(.backgroundsSecondary)
             )
             
-            FavoriteIcon(isFavorite: $isFavorite)
+            FavoriteIcon(isFavorite: $product.isFavorite)
                 .padding(8)
         }
-        
     }
 }
 

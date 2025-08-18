@@ -9,16 +9,12 @@ import SwiftUI
 
 struct ProductCardMedium: View {
     
-//    var product: Product
-    
     @Binding var product: Product
-    
-    //    @State var isFavorite = false
     
     var body: some View {
         
-        ZStack (alignment: .topTrailing) {
-            VStack (spacing: 16) {
+        ZStack(alignment: .topTrailing) {
+            VStack(spacing: 16) {
                 ZStack (alignment: .topTrailing) {
                     AsyncImage(url: URL(string: product.thumbnail)) { image in
                         image.resizable()
@@ -32,10 +28,10 @@ struct ProductCardMedium: View {
                     .frame(width: 160, height: 160)
                     
                     FavoriteIcon(isFavorite: $product.isFavorite)
-                    
+
                 }
                 
-                VStack (alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: 4) {
                     Text(product.title)
                         .font(.system(.subheadline, weight: .regular))
                         .foregroundStyle(.labelsPrimary)
@@ -53,10 +49,7 @@ struct ProductCardMedium: View {
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
                     .fill(.backgroundsSecondary)
             )
-            
-            
         }
-        
     }
 }
 
