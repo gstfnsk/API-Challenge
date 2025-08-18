@@ -10,10 +10,9 @@ import SwiftUI
 struct FavoritesView: View {
     
     @State var viewModel: ProductViewModel
-    var isEmpty: Bool = false
+    var isEmpty: Bool = true
     
     var body: some View {
-        
         
         NavigationStack {
             if (isEmpty) {
