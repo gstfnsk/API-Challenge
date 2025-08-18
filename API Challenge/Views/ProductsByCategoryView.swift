@@ -33,6 +33,7 @@ struct ProductsByCategoryView: View {
                                 ProductCardMedium(product: product)
                             }
                             .buttonStyle(.plain)
+
                     }
                 }
                 .padding(.horizontal)

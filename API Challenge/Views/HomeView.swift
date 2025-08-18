@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     
-    let viewModel: ProductViewModel
+    @State var viewModel: ProductViewModel
     
     let columns = [
         GridItem(.flexible(), spacing: 16),
@@ -32,13 +32,8 @@ struct HomeView: View {
                                 ProductCardLarge(product: product)
                             }
                             .buttonStyle(.plain)
+
                         }
-                    }
-                    
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Top picks")
-                            .foregroundColor(.labelsPrimary)
-                            .font(.system(.title2, weight: .bold))
                         
                         LazyVGrid(columns: columns, spacing: 16) {
                             ForEach(viewModel.products) { product in
@@ -51,13 +46,13 @@ struct HomeView: View {
                             }
                         }
                     }
+                    .padding(.top)
+                    .padding(.horizontal)
                 }
-                .padding(.top)
-                .padding(.horizontal)
+                .navigationTitle("Home")
+            }.task {
+                await viewModel.loadProducts()
             }
-            .navigationTitle("Home")
-        }.task {
-            await viewModel.loadProducts()
         }
     }
 }
