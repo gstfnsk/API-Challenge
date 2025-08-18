@@ -25,34 +25,32 @@ struct HomeView: View {
                         Text("Deals of the day")
                             .foregroundColor(.labelsPrimary)
                             .font(.system(.title2, weight: .bold))
-                        if let product = viewModel.product {
-                            ProductCardLarge(product: product)
-                        }
-                    }
-                    
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Top picks")
-                            .foregroundColor(.labelsPrimary)
-                            .font(.system(.title2, weight: .bold))
+                        ProductCardLarge(product: $viewModel.products[0])
                         
-                        LazyVGrid(columns: columns, spacing: 16) {
-                            ForEach($viewModel.products) { $product in
-                                ProductCardMedium(product: $product)
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Top picks")
+                                .foregroundColor(.labelsPrimary)
+                                .font(.system(.title2, weight: .bold))
+                            
+                            LazyVGrid(columns: columns, spacing: 16) {
+                                ForEach($viewModel.products) { $product in
+                                    ProductCardMedium(product: $product)
+                                }
                             }
                         }
                     }
+                    .padding(.top)
+                    .padding(.horizontal)
                 }
-                .padding(.top)
-                .padding(.horizontal)
+                .navigationTitle("Home")
+            }.task {
+                await viewModel.loadProducts()
             }
-            .navigationTitle("Home")
-        }.task {
-            await viewModel.loadProducts()
         }
     }
 }
-
-#Preview {
-    TabBar()
-}
-
+    
+    #Preview {
+        TabBar()
+    }
+    
