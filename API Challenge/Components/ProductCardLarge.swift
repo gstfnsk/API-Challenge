@@ -29,7 +29,7 @@ struct ProductCardLarge: View {
                 
                 VStack(alignment: .leading, spacing: 32) {
                     
-                    Text(product.category)
+                    Text(product.category.uppercased())
                         .font(.system(.footnote, weight: .regular))
                         .foregroundColor(.labelsSecondary)
                                         
@@ -45,6 +45,7 @@ struct ProductCardLarge: View {
                     }
                 }
                 .padding(.bottom, 24)
+                Spacer()
             }
             .padding(8)
             .background(
