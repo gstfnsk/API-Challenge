@@ -5,26 +5,16 @@
 //  Created by Enzo Tonatto on 15/08/25.
 //
 
+// ProductsByCategoryView.swift
 import SwiftUI
 
 struct ProductsByCategoryView: View {
+    @Bindable var viewModel = ProductsByCategoryViewModel()   
     let category: ProductCategory
-    
-    @State private var searchText: String = ""
-    @State var viewModel = ProductsByCategoryViewModel()
-    
-    private let columns = [GridItem(.adaptive(minimum: 160), spacing: 16)]
-    
-    private var filteredBindings: [Binding<Product>] {
-        let q = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
-        return $viewModel.products.filter { product in
-            q.isEmpty ||
-            product.wrappedValue.title.localizedCaseInsensitiveContains(q) ||
-            product.wrappedValue.description.localizedCaseInsensitiveContains(q)
-        }
-    }
+    let columns = [GridItem(.adaptive(minimum: 160), spacing: 16)]
     
     var body: some View {
+
         ScrollView {
             if viewModel.isLoading {
                 ProgressView().padding()
@@ -38,9 +28,23 @@ struct ProductsByCategoryView: View {
                 .padding()
             } else {
                 LazyVGrid(columns: columns, spacing: 16) {
-                    ForEach(filteredBindings) { $product in
-                        NavigationLink(destination: DetailsView(product: $product).toolbar(.hidden, for: .tabBar)){
-                            ProductCardMedium(product: $product)
+                    ForEach(viewModel.filteredProducts) { product in
+                        // tenta achar o índice correspondente na fonte de verdade
+                        if let i = viewModel.products.firstIndex(where: { $0.id == product.id }) {
+                            NavigationLink {
+                                DetailsView(product: viewModel.products[i])
+                            } label: {
+                                ProductCardMedium(product: $viewModel.products[i]) // Binding<Product>
+                            }
+                            .buttonStyle(.plain)
+                        } else {
+                            // fallback: item não está na lista principal (somente leitura)
+                            NavigationLink {
+                                DetailsView(product: product)
+                            } label: {
+                                ProductCardMedium(product: .constant(product))
+                            }
+                            .buttonStyle(.plain)
                         }
                     }
                 }
@@ -49,7 +53,7 @@ struct ProductsByCategoryView: View {
             }
         }
         .searchable(
-            text: $searchText,
+            text: $viewModel.searchText,
             placement: .navigationBarDrawer(displayMode: .always),
             prompt: "Search"
         )
@@ -57,9 +61,7 @@ struct ProductsByCategoryView: View {
         .navigationBarTitleDisplayMode(.inline)
         .task { await viewModel.load(category: category) }
         .refreshable { await viewModel.load(category: category) }
-        .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(.visible, for: .navigationBar)
-
     }
 }
 
