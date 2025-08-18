@@ -29,7 +29,7 @@ struct ProductCardLarge: View {
                 
                 VStack(alignment: .leading, spacing: 32) {
                     
-                    Text(product.category)
+                    Text(product.category.uppercased())
                         .font(.system(.footnote, weight: .regular))
                         .foregroundColor(.labelsSecondary)
                                         
@@ -38,6 +38,10 @@ struct ProductCardLarge: View {
                         Text(product.title)
                             .font(.system(.subheadline, weight: .regular))
                             .foregroundStyle(.labelsPrimary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .multilineTextAlignment(.leading) 
+                            .fixedSize(horizontal: false, vertical: true)
+                        
                         
                         Text("US$ " + String(product.price))
                             .font(.system(.headline, weight: .semibold))
@@ -45,12 +49,17 @@ struct ProductCardLarge: View {
                     }
                 }
                 .padding(.bottom, 24)
+                
+                Spacer()
             }
+            
             .padding(8)
+            
             .background(
                 RoundedRectangle(cornerRadius: 16)
                     .fill(.backgroundsSecondary)
             )
+            .frame(width: 361, alignment: .center)
             
             FavoriteIcon(isFavorite: $product.isFavorite)
                 .padding(8)
