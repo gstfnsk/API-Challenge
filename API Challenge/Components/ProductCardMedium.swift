@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ProductCardMedium: View {
     
+    var favoritesViewModel: FavoritesViewModel = FavoritesViewModel(dataSource: .shared)
+
     @Binding var product: Product
     
     var body: some View {
@@ -27,8 +29,10 @@ struct ProductCardMedium: View {
                     }
                     .frame(width: 160, height: 160)
                     
-                    FavoriteIcon(isFavorite: $product.isFavorite)
-
+                    FavoriteIcon(isFavorite: $product.isFavorite) {
+                        favoritesViewModel.addFavoriteById(id: product.id)
+                        print()
+                    }
                 }
                 
                 VStack(alignment: .leading, spacing: 4) {

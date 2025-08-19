@@ -10,11 +10,13 @@ import SwiftUI
 struct FavoriteIcon: View {
     
     @Binding var isFavorite: Bool
+    var onTap: (() -> Void)?
     
     var body: some View {
         
         Button {
             isFavorite.toggle()
+            onTap?()
         } label: {
             Image(systemName: isFavorite ? "heart.fill" : "heart")
                 .foregroundColor(.labelsPrimary)
@@ -30,5 +32,5 @@ struct FavoriteIcon: View {
 }
 
 #Preview {
-    FavoriteIcon(isFavorite: .constant(false))
+//    FavoriteIcon(isFavorite: .constant(false))
 }

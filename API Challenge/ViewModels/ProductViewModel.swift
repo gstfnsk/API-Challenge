@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftData
 
 @Observable
 class ProductViewModel: ProductViewModelProtocol {
@@ -32,5 +33,5 @@ class ProductViewModel: ProductViewModelProtocol {
         
         isLoading = false
     }
-    
+ 
 }
