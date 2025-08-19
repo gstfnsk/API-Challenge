@@ -5,16 +5,16 @@
 //  Created by Enzo Tonatto on 15/08/25.
 //
 
-// ProductsByCategoryView.swift
 import SwiftUI
 
 struct ProductsByCategoryView: View {
-    @Bindable var viewModel = ProductsByCategoryViewModel()   
+    @Bindable var viewModel = ProductsByCategoryViewModel()
+    @State private var selectedProduct: Product?
+
     let category: ProductCategory
     let columns = [GridItem(.adaptive(minimum: 160), spacing: 16)]
     
     var body: some View {
-
         ScrollView {
             if viewModel.isLoading {
                 ProgressView().padding()
@@ -29,18 +29,16 @@ struct ProductsByCategoryView: View {
             } else {
                 LazyVGrid(columns: columns, spacing: 16) {
                     ForEach(viewModel.filteredProducts) { product in
-                        // tenta achar o índice correspondente na fonte de verdade
                         if let i = viewModel.products.firstIndex(where: { $0.id == product.id }) {
-                            NavigationLink {
-                                DetailsView(product: viewModel.products[i])
+                            Button {
+                                selectedProduct = viewModel.products[i]
                             } label: {
-                                ProductCardMedium(product: $viewModel.products[i]) // Binding<Product>
+                                ProductCardMedium(product: $viewModel.products[i])
                             }
                             .buttonStyle(.plain)
                         } else {
-                            // fallback: item não está na lista principal (somente leitura)
-                            NavigationLink {
-                                DetailsView(product: product)
+                            Button {
+                                selectedProduct = product
                             } label: {
                                 ProductCardMedium(product: .constant(product))
                             }
@@ -62,6 +60,14 @@ struct ProductsByCategoryView: View {
         .task { await viewModel.load(category: category) }
         .refreshable { await viewModel.load(category: category) }
         .toolbarBackground(.visible, for: .navigationBar)
+        .sheet(item: $selectedProduct) { product in
+            NavigationStack {
+                DetailsView(product: product)
+                    .navigationTitle("Details")
+                    .navigationBarTitleDisplayMode(.inline)
+            }
+            .presentationDragIndicator(.visible)
+        }
     }
 }
 

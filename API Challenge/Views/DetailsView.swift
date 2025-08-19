@@ -10,7 +10,6 @@ import SwiftUI
 struct DetailsView: View {
     
     var product: Product
-//    @Binding var product: Product
     @State var isFavorite = false
     
     var body: some View {
@@ -55,12 +54,5 @@ struct DetailsView: View {
 }
 
 #Preview {
-    DetailsView(product: Product(
-        id: 1,
-        title: "Apple Watch Series 9",
-        description: "O mais novo Apple Watch com tela Always-On Retina, resistência à água e monitoramento avançado de saúde.",
-        category: "Wearables",
-        price: 3999.99,
-        thumbnail: ""
-    ))
+    TabBar()
 }
