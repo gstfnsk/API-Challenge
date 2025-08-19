@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
     
     @State var viewModel: ProductViewModel
+    @State var product: Product?
     @State private var selectedProduct: Product?
     
     let columns = [
@@ -62,13 +63,12 @@ struct HomeView: View {
             .task { await viewModel.loadProducts() }
             .sheet(item: $selectedProduct) { product in
                 NavigationStack {
-                    DetailsView(product: product)
-                        .navigationTitle("Details") 
-                        .navigationBarTitleDisplayMode(.inline)
+                    if let index = viewModel.products.firstIndex(where: { $0.id == product.id }) {
+                        DetailsView(product: $viewModel.products[index])
+                    }
                 }
                 .presentationDragIndicator(.visible)
             }
-
         }
     }
 }
