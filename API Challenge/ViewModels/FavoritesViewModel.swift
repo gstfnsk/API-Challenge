@@ -14,20 +14,20 @@ class FavoritesViewModel: Observable {
     
     init(dataSource: SwiftDataService) {
         self.dataSource = dataSource
-        
         favorites = dataSource.fetchFavorites()
     }
     
-    func addFavoriteById(id: Int) {
-        let favorite = Favorites(id: id)
-        dataSource.addFavorites(favorite)
-        favorites = dataSource.fetchFavorites()
-        
-        favorites.forEach { favorite in
-            print(favorite.id)
+    func toggleFavorite(id: Int) {
+            if let isFavorite = favorites.first(where: { $0.id == id }) {
+                dataSource.deleteFavorites(isFavorite)
+            } else {
+                // Não é favorito: adiciona
+                let favorite = Favorites(id: id)
+                dataSource.addFavorites(favorite)
+            }
+            // Atualiza
+            favorites = dataSource.fetchFavorites()
+
+            favorites.forEach { print($0.id) }
         }
-        
-        
-    }
-    
 }

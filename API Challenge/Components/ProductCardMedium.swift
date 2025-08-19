@@ -30,7 +30,7 @@ struct ProductCardMedium: View {
                     .frame(width: 160, height: 160)
                     
                     FavoriteIcon(isFavorite: $product.isFavorite) {
-                        favoritesViewModel.addFavoriteById(id: product.id)
+                        favoritesViewModel.toggleFavorite(id: product.id)
                         print()
                     }
                 }

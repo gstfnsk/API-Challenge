@@ -29,8 +29,17 @@ class SwiftDataService {
         }
     }
     
-    func addFavorites(_ favorites: Favorites) {
-        modelContext.insert(favorites)
+    func addFavorites(_ favorite: Favorites) {
+        modelContext.insert(favorite)
+        do {
+            try modelContext.save()
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    func deleteFavorites(_ favorite: Favorites) {
+        modelContext.delete(favorite)
         do {
             try modelContext.save()
         } catch {
