@@ -35,10 +35,12 @@ struct ProductCardMedium: View {
                     Text(product.title)
                         .font(.system(.subheadline, weight: .regular))
                         .foregroundStyle(.labelsPrimary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     
                     Text("US$ " + String(product.price))
                         .font(.system(.headline, weight: .semibold))
                         .foregroundStyle(.labelsPrimary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(.bottom, 4)
                 
