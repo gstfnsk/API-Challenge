@@ -11,7 +11,7 @@ struct ProductsByCategoryView: View {
     @Bindable var viewModel = ProductsByCategoryViewModel()
     @EnvironmentObject private var favoritesVM: FavoritesViewModel
     @State private var selectedProduct: Product?
-
+    
     let category: ProductCategory
     let columns = [GridItem(.adaptive(minimum: 160), spacing: 16)]
     
@@ -58,9 +58,12 @@ struct ProductsByCategoryView: View {
         .toolbarBackground(.visible, for: .navigationBar)
         .sheet(item: $selectedProduct) { product in
             NavigationStack {
-                DetailsView(product: product)
-                    .navigationTitle("Details")
-                    .navigationBarTitleDisplayMode(.inline)
+                if let index = viewModel.products.firstIndex(where: { $0.id == product.id }) {
+                    DetailsView(product: $viewModel.products[index])
+                        .navigationTitle("Details")
+                        .navigationBarTitleDisplayMode(.inline)
+                        .background(Color.backgroundsPrimary)
+                }
             }
             .presentationDragIndicator(.visible)
         }

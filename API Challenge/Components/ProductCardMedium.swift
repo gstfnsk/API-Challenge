@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ProductCardMedium: View {
     @ObservedObject var favoritesViewModel: FavoritesViewModel
+
     @Binding var product: Product
     
     init(product: Binding<Product>, favoritesViewModel: FavoritesViewModel) {
@@ -22,8 +23,13 @@ struct ProductCardMedium: View {
                 ZStack(alignment: .topTrailing) {
                     AsyncImage(url: URL(string: product.thumbnail)) { image in
                         image.resizable()
+                        .scaledToFit()
+                        .frame(width: 161, height: 160)
                     } placeholder: {
                         Image("ProductPlaceholder")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 161, height: 160)
                             .background(RoundedRectangle(cornerRadius: 8).foregroundStyle(.gray.opacity(0.3)))
                     }
                     .frame(width: 160, height: 160)
@@ -34,6 +40,7 @@ struct ProductCardMedium: View {
                             set: { _ in favoritesViewModel.toggleFavorite(id: product.id) }
                         )
                     )
+
                 }
                 
                 VStack(alignment: .leading, spacing: 4) {
@@ -41,13 +48,16 @@ struct ProductCardMedium: View {
                         .font(.system(.subheadline, weight: .regular))
                         .foregroundStyle(.labelsPrimary)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .lineLimit(2)
+                        .truncationMode(.tail)
                     
                     Text("US$ " + String(product.price))
                         .font(.system(.headline, weight: .semibold))
                         .foregroundStyle(.labelsPrimary)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .padding(.bottom, 4)
+
+//                .padding(.horizontal, 8)
             }
             .padding(8)
             .frame(width: 178, height: 250)
@@ -55,6 +65,12 @@ struct ProductCardMedium: View {
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
                     .fill(.backgroundsSecondary)
             )
+            
+            // Ícone agora está alinhado ao card, não à imagem
+            FavoriteIcon(isFavorite: $product.isFavorite) {
+                favoritesViewModel.toggleFavorite(id: product.id)
+            }
+            .padding(8) // afasta do canto do card
         }
     }
 }
