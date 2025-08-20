@@ -11,8 +11,8 @@ struct HomeView: View {
     
     @State var viewModel: ProductViewModel
     @State var product: Product?
-    @State private var selectedProduct: Product?
-    @EnvironmentObject private var favoriteviewModel: FavoritesViewModel
+    @State var selectedProduct: Product?
+    @EnvironmentObject var favoriteviewModel: FavoritesViewModel
 
     let columns = [
         GridItem(.flexible(), spacing: 16),
@@ -65,7 +65,7 @@ struct HomeView: View {
             .sheet(item: $selectedProduct) { product in
                 NavigationStack {
                     if let index = viewModel.products.firstIndex(where: { $0.id == product.id }) {
-                        DetailsView(product: $viewModel.products[index])
+                        DetailsView(product: $viewModel.products[index], favoritesViewModel: favoriteviewModel)
                             .navigationTitle("Details")
                             .navigationBarTitleDisplayMode(.inline)
                             .background(Color.backgroundsPrimary)

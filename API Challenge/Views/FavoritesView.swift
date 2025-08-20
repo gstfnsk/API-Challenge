@@ -35,7 +35,7 @@ struct FavoritesView: View {
         .sheet(item: $selectedProduct) { product in
             NavigationStack {
                 if let index = productsVM.products.firstIndex(where: { $0.id == product.id }) {
-                    DetailsView(product: $productsVM.products[index])
+                    DetailsView(product: $productsVM.products[index], favoritesViewModel: favoritesVM )
                         .navigationTitle("Details")
                         .navigationBarTitleDisplayMode(.inline)
                         .background(Color.backgroundsPrimary)

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProductsByCategoryView: View {
     @Bindable var viewModel = ProductsByCategoryViewModel()
-    @EnvironmentObject private var favoritesVM: FavoritesViewModel
+    @EnvironmentObject var favoritesVM: FavoritesViewModel
     @State private var selectedProduct: Product?
     
     let category: ProductCategory
@@ -59,7 +59,7 @@ struct ProductsByCategoryView: View {
         .sheet(item: $selectedProduct) { product in
             NavigationStack {
                 if let index = viewModel.products.firstIndex(where: { $0.id == product.id }) {
-                    DetailsView(product: $viewModel.products[index])
+                    DetailsView(product: $viewModel.products[index], favoritesViewModel: favoritesVM)
                         .navigationTitle("Details")
                         .navigationBarTitleDisplayMode(.inline)
                         .background(Color.backgroundsPrimary)
