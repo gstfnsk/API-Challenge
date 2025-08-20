@@ -8,25 +8,39 @@
 import SwiftUI
 
 struct ProductCardMedium: View {
-    
-    var favoritesViewModel: FavoritesViewModel = FavoritesViewModel(dataSource: .shared)
-    
+    @ObservedObject var favoritesViewModel: FavoritesViewModel
+
     @Binding var product: Product
     
+    init(product: Binding<Product>, favoritesViewModel: FavoritesViewModel) {
+        self._product = product
+        self.favoritesViewModel = favoritesViewModel
+    }
+    
     var body: some View {
-        
         ZStack(alignment: .topTrailing) {
-            VStack {
-                AsyncImage(url: URL(string: product.thumbnail)) { image in
-                    image.resizable()
+            VStack(spacing: 16) {
+                ZStack(alignment: .topTrailing) {
+                    AsyncImage(url: URL(string: product.thumbnail)) { image in
+                        image.resizable()
                         .scaledToFit()
                         .frame(width: 161, height: 160)
-                } placeholder: {
-                    Image("ProductPlaceholder")
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 161, height: 160)
-                        .background(RoundedRectangle(cornerRadius: 16).foregroundStyle(.graysGray5))
+                    } placeholder: {
+                        Image("ProductPlaceholder")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 161, height: 160)
+                            .background(RoundedRectangle(cornerRadius: 8).foregroundStyle(.gray.opacity(0.3)))
+                    }
+                    .frame(width: 160, height: 160)
+                    
+                    FavoriteIcon(
+                        isFavorite: Binding(
+                            get: { favoritesViewModel.isFavorite(id: product.id) },
+                            set: { _ in favoritesViewModel.toggleFavorite(id: product.id) }
+                        )
+                    )
+
                 }
                 
                 VStack(alignment: .leading, spacing: 4) {
@@ -42,6 +56,7 @@ struct ProductCardMedium: View {
                         .foregroundStyle(.labelsPrimary)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
+
 //                .padding(.horizontal, 8)
             }
             .padding(8)

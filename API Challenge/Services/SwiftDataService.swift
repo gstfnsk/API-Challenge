@@ -15,7 +15,7 @@ class SwiftDataService {
     static let shared = SwiftDataService()
     
     @MainActor
-    private init() {
+    init() {
         // Change isStoredInMemoryOnly to false if you would like to see the data persistance after kill/exit the app
         self.modelContainer = try! ModelContainer(for: Cart.self, Favorites.self, Order.self, configurations: ModelConfiguration(isStoredInMemoryOnly: false))
         self.modelContext = modelContainer.mainContext

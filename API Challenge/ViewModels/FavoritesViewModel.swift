@@ -6,9 +6,10 @@
 //
 
 import SwiftData
+import Combine
 
-class FavoritesViewModel: Observable {
-    var favorites: [Favorites] = []
+class FavoritesViewModel: ObservableObject {
+    @Published var favorites: [Favorites] = []
     
     private let dataSource: SwiftDataService
     
@@ -17,17 +18,21 @@ class FavoritesViewModel: Observable {
         favorites = dataSource.fetchFavorites()
     }
     
+    func isFavorite(id: Int) -> Bool {
+            favorites.contains { $0.id == id }
+    }
+    
     func toggleFavorite(id: Int) {
             if let isFavorite = favorites.first(where: { $0.id == id }) {
                 dataSource.deleteFavorites(isFavorite)
             } else {
-                // Não é favorito: adiciona
                 let favorite = Favorites(id: id)
                 dataSource.addFavorites(favorite)
             }
-            // Atualiza
             favorites = dataSource.fetchFavorites()
 
             favorites.forEach { print($0.id) }
-        }
+    }
+    
+    
 }

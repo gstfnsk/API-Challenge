@@ -1,5 +1,5 @@
 //
-//  ProductCard.swift
+//  ProductCardLarge.swift
 //  API Challenge
 //
 //  Created by Enzo Tonatto on 14/08/25.
@@ -8,14 +8,17 @@
 import SwiftUI
 
 struct ProductCardLarge: View {
-    
+    @ObservedObject var favoritesViewModel: FavoritesViewModel
     @Binding var product: Product
     
+    init(product: Binding<Product>, favoritesViewModel: FavoritesViewModel) {
+        self._product = product
+        self.favoritesViewModel = favoritesViewModel
+    }
+    
     var body: some View {
-        
         ZStack(alignment: .topTrailing) {
             HStack(spacing: 16) {
-                
                 AsyncImage(url: URL(string: product.thumbnail)) { image in
                     image.resizable()
                 } placeholder: {
@@ -25,16 +28,14 @@ struct ProductCardLarge: View {
                                 .foregroundStyle(.gray.opacity(0.3))
                         )
                 }
-                    .frame(width: 160, height: 160)
+                .frame(width: 160, height: 160)
                 
                 VStack(alignment: .leading, spacing: 32) {
-                    
                     Text(product.category.uppercased())
                         .font(.system(.footnote, weight: .regular))
                         .foregroundColor(.labelsSecondary)
-                                        
+                    
                     VStack(alignment: .leading, spacing: 4) {
-                        
                         Text(product.title)
                             .font(.system(.subheadline, weight: .regular)).lineLimit(2)
                             .truncationMode(.tail)
@@ -54,12 +55,18 @@ struct ProductCardLarge: View {
                     .fill(.backgroundsSecondary)
             )
             
-            FavoriteIcon(isFavorite: $product.isFavorite)
-                .padding(8)
+            FavoriteIcon(
+                isFavorite: Binding(
+                    get: { favoritesViewModel.isFavorite(id: product.id) },
+                    set: { _ in favoritesViewModel.toggleFavorite(id: product.id) }
+                )
+            )
+            .padding(8)
         }
     }
 }
 
-#Preview {
-//    ProductCardLarge()
-}
+//#Preview {
+//    @State static var mock = Product.mock
+//    ProductCardLarge(product: $mock, favoritesViewModel: FavoritesViewModel(dataSource: .shared))
+//}

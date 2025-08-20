@@ -12,7 +12,8 @@ struct HomeView: View {
     @State var viewModel: ProductViewModel
     @State var product: Product?
     @State private var selectedProduct: Product?
-    
+    @EnvironmentObject private var favoriteviewModel: FavoritesViewModel
+
     let columns = [
         GridItem(.flexible(), spacing: 16),
         GridItem(.flexible(), spacing: 16)
@@ -33,7 +34,7 @@ struct HomeView: View {
                             Button {
                                 selectedProduct = viewModel.products[i]
                             } label: {
-                                ProductCardLarge(product: $viewModel.products[i])
+                                ProductCardLarge(product: $viewModel.products[i], favoritesViewModel: favoriteviewModel)
                             }
                             .buttonStyle(.plain)
                         }
@@ -49,7 +50,7 @@ struct HomeView: View {
                                 Button {
                                     selectedProduct = viewModel.products[i]
                                 } label: {
-                                    ProductCardMedium(product: $viewModel.products[i])
+                                    ProductCardMedium(product: $viewModel.products[i], favoritesViewModel: favoriteviewModel)
                                 }
                                 .buttonStyle(.plain)
                             }

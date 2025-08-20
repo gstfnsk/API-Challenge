@@ -21,6 +21,18 @@ class ProductViewModel: ProductViewModelProtocol {
         self.service = service
     }
     
+    func syncFavorites(with favorites: [Favorites]) {
+            let ids = Set(favorites.map(\.id))
+            for i in products.indices {
+                products[i].isFavorite = ids.contains(products[i].id)
+            }
+            if let p = product {
+                var copy = p
+                copy.isFavorite = ids.contains(p.id)
+                product = copy
+            }
+    }
+    
     func loadProducts() async {
         isLoading = true
         
