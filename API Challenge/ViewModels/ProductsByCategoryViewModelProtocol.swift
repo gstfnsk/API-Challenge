@@ -14,4 +14,5 @@ protocol ProductsByCategoryViewModelProtocol {
     var searchText: String { get set }
     var filteredProducts: [Product] { get }
     func load(category: ProductCategory, limit: Int, skip: Int) async
+    func syncFavorites(with favorites: [Favorites])
 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ProductsByCategoryView: View {
     @Bindable var viewModel = ProductsByCategoryViewModel()
+    @EnvironmentObject private var favoritesVM: FavoritesViewModel
     @State private var selectedProduct: Product?
 
     let category: ProductCategory
@@ -33,14 +34,10 @@ struct ProductsByCategoryView: View {
                             Button {
                                 selectedProduct = viewModel.products[i]
                             } label: {
-                                ProductCardMedium(product: $viewModel.products[i])
-                            }
-                            .buttonStyle(.plain)
-                        } else {
-                            Button {
-                                selectedProduct = product
-                            } label: {
-                                ProductCardMedium(product: .constant(product))
+                                ProductCardMedium(
+                                    product: $viewModel.products[i],
+                                    favoritesViewModel: favoritesVM
+                                )
                             }
                             .buttonStyle(.plain)
                         }
@@ -54,8 +51,7 @@ struct ProductsByCategoryView: View {
             text: $viewModel.searchText,
             placement: .navigationBarDrawer(displayMode: .always),
             prompt: "Search"
-        )
-        .navigationTitle(category.displayName)
+        )        .navigationTitle(category.displayName)
         .navigationBarTitleDisplayMode(.inline)
         .task { await viewModel.load(category: category) }
         .refreshable { await viewModel.load(category: category) }

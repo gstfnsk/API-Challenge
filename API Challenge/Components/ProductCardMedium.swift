@@ -8,31 +8,32 @@
 import SwiftUI
 
 struct ProductCardMedium: View {
-    
-    var favoritesViewModel: FavoritesViewModel = FavoritesViewModel(dataSource: .shared)
-
+    @ObservedObject var favoritesViewModel: FavoritesViewModel
     @Binding var product: Product
     
+    init(product: Binding<Product>, favoritesViewModel: FavoritesViewModel) {
+        self._product = product
+        self.favoritesViewModel = favoritesViewModel
+    }
+    
     var body: some View {
-        
         ZStack(alignment: .topTrailing) {
             VStack(spacing: 16) {
-                ZStack (alignment: .topTrailing) {
+                ZStack(alignment: .topTrailing) {
                     AsyncImage(url: URL(string: product.thumbnail)) { image in
                         image.resizable()
                     } placeholder: {
                         Image("ProductPlaceholder")
-                            .background(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .foregroundStyle(.gray.opacity(0.3))
-                            )
+                            .background(RoundedRectangle(cornerRadius: 8).foregroundStyle(.gray.opacity(0.3)))
                     }
                     .frame(width: 160, height: 160)
                     
-                    FavoriteIcon(isFavorite: $product.isFavorite) {
-                        favoritesViewModel.toggleFavorite(id: product.id)
-                        print()
-                    }
+                    FavoriteIcon(
+                        isFavorite: Binding(
+                            get: { favoritesViewModel.isFavorite(id: product.id) },
+                            set: { _ in favoritesViewModel.toggleFavorite(id: product.id) }
+                        )
+                    )
                 }
                 
                 VStack(alignment: .leading, spacing: 4) {
@@ -47,7 +48,6 @@ struct ProductCardMedium: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(.bottom, 4)
-                
             }
             .padding(8)
             .frame(width: 178, height: 250)
@@ -58,6 +58,7 @@ struct ProductCardMedium: View {
         }
     }
 }
+
 
 #Preview {
     //    ProductCardMedium()
