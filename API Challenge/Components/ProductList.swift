@@ -10,7 +10,6 @@ import SwiftUI
 struct ProductList: View {
     
     var product : Product
-    var image = Image(.productCart)
     var amount: Int?
     var orderDate: String?
     
