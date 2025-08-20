@@ -9,9 +9,15 @@ import SwiftUI
 
 struct DetailsView: View {
     
+    @ObservedObject var favoritesViewModel: FavoritesViewModel
+
     @Binding var product: Product
-    @EnvironmentObject private var favoritesVM: FavoritesViewModel
-    @State var isFavorite = false
+    
+    init(product: Binding<Product>, favoritesViewModel: FavoritesViewModel) {
+        self._product = product
+        self.favoritesViewModel = favoritesViewModel
+    }
+//    @State var isFavorite : Bool?
     
     var body: some View {
         VStack {
@@ -36,7 +42,12 @@ struct DetailsView: View {
                         }
                         .frame(width: 361, height: 361)
                         
-                        FavoriteIcon(isFavorite: $product.isFavorite)
+                        FavoriteIcon(
+                            isFavorite: Binding(
+                                get: { favoritesViewModel.isFavorite(id: product.id) },
+                                set: { _ in favoritesViewModel.toggleFavorite(id: product.id) }
+                            )
+                        )
                             .padding(.top, 16)
                             .padding(.trailing, 16)
                         
