@@ -29,6 +29,14 @@ class SwiftDataService {
         }
     }
     
+    func fetchCart() -> [Cart] {
+        do {
+            return try modelContext.fetch(FetchDescriptor<Cart>())
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
     func addFavorites(_ favorite: Favorites) {
         modelContext.insert(favorite)
         do {
@@ -38,8 +46,25 @@ class SwiftDataService {
         }
     }
     
+    func addProduct(cart: Cart) {
+        do {
+            try modelContext.save()
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
     func deleteFavorites(_ favorite: Favorites) {
         modelContext.delete(favorite)
+        do {
+            try modelContext.save()
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    func deleteFromCart(_ cart: Cart) {
+        modelContext.delete(cart)
         do {
             try modelContext.save()
         } catch {
