@@ -65,6 +65,10 @@ struct HomeView: View {
                 NavigationStack {
                     if let index = viewModel.products.firstIndex(where: { $0.id == product.id }) {
                         DetailsView(product: $viewModel.products[index])
+                            .navigationTitle("Details")
+                            .navigationBarTitleDisplayMode(.inline)
+                            .background(Color.backgroundsPrimary)
+                            
                     }
                 }
                 .presentationDragIndicator(.visible)

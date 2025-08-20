@@ -36,7 +36,8 @@ struct ProductCardLarge: View {
                     VStack(alignment: .leading, spacing: 4) {
                         
                         Text(product.title)
-                            .font(.system(.subheadline, weight: .regular))
+                            .font(.system(.subheadline, weight: .regular)).lineLimit(2)
+                            .truncationMode(.tail)
                             .foregroundStyle(.labelsPrimary)
                         
                         Text("US$ " + String(product.price))

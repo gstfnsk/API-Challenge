@@ -66,6 +66,7 @@ struct ProductsByCategoryView: View {
                     DetailsView(product: $viewModel.products[index])
                         .navigationTitle("Details")
                         .navigationBarTitleDisplayMode(.inline)
+                        .background(Color.backgroundsPrimary)
                 }
             }
             .presentationDragIndicator(.visible)
