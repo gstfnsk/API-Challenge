@@ -19,8 +19,7 @@ struct ProductCardMedium: View {
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            VStack(spacing: 16) {
-                ZStack(alignment: .topTrailing) {
+            VStack{
                     AsyncImage(url: URL(string: product.thumbnail)) { image in
                         image.resizable()
                         .scaledToFit()
@@ -30,10 +29,8 @@ struct ProductCardMedium: View {
                             .resizable()
                             .scaledToFill()
                             .frame(width: 161, height: 160)
-                            .background(RoundedRectangle(cornerRadius: 8).foregroundStyle(.gray.opacity(0.3)))
+                            .background(RoundedRectangle(cornerRadius: 16).foregroundStyle(.graysGray5))
                     }
-                    .frame(width: 160, height: 160)
-                }
                 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(product.title)

@@ -10,7 +10,7 @@ import SwiftUI
 struct DetailsView: View {
     
     @Binding var product: Product
-    
+    @EnvironmentObject private var favoritesVM: FavoritesViewModel
     @State var isFavorite = false
     
     var body: some View {
@@ -22,7 +22,7 @@ struct DetailsView: View {
                             image.resizable()
                                 .scaledToFit()
                                 .background(
-                                    RoundedRectangle(cornerRadius: 8)
+                                    RoundedRectangle(cornerRadius: 16)
                                         .foregroundStyle(.graysGray5))
                                 
                         } placeholder: {
@@ -30,15 +30,15 @@ struct DetailsView: View {
                                 .resizable()
                                 .scaledToFill()
                                 .background(
-                                    RoundedRectangle(cornerRadius: 8)
+                                    RoundedRectangle(cornerRadius: 16)
                                         .foregroundStyle(.backgroundsSecondary)
                                 )
                         }
                         .frame(width: 361, height: 361)
                         
                         FavoriteIcon(isFavorite: $product.isFavorite)
-                            .padding(.top, 8)
-                            .padding(.trailing, 8)
+                            .padding(.top, 16)
+                            .padding(.trailing, 16)
                         
                     }
                     VStack(alignment: .leading, spacing: 4) {
