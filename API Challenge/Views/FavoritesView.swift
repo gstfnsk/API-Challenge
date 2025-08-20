@@ -2,9 +2,9 @@
 import SwiftUI
 
 struct FavoritesView: View {
-    @EnvironmentObject private var favoritesVM: FavoritesViewModel
-    @State private var productsVM = ProductViewModel(service: ProductService())
-    @State private var selectedProduct: Product?
+    @EnvironmentObject var favoritesVM: FavoritesViewModel
+    @State var productsVM = ProductViewModel(service: ProductService())
+    @State var selectedProduct: Product?
 
     private var favoriteProducts: [Product] {
         productsVM.products.filter { favoritesVM.isFavorite(id: $0.id) }
@@ -34,9 +34,12 @@ struct FavoritesView: View {
         .task { await productsVM.loadProducts() }
         .sheet(item: $selectedProduct) { product in
             NavigationStack {
-                DetailsView(product: product)
-                    .navigationTitle("Details")
-                    .navigationBarTitleDisplayMode(.inline)
+                if let index = productsVM.products.firstIndex(where: { $0.id == product.id }) {
+                    DetailsView(product: $productsVM.products[index])
+                        .navigationTitle("Details")
+                        .navigationBarTitleDisplayMode(.inline)
+                        .background(Color.backgroundsPrimary)
+                }
             }
             .presentationDragIndicator(.visible)
         }

@@ -33,14 +33,6 @@ struct ProductCardMedium: View {
                             .background(RoundedRectangle(cornerRadius: 8).foregroundStyle(.gray.opacity(0.3)))
                     }
                     .frame(width: 160, height: 160)
-                    
-                    FavoriteIcon(
-                        isFavorite: Binding(
-                            get: { favoritesViewModel.isFavorite(id: product.id) },
-                            set: { _ in favoritesViewModel.toggleFavorite(id: product.id) }
-                        )
-                    )
-
                 }
                 
                 VStack(alignment: .leading, spacing: 4) {
@@ -56,8 +48,6 @@ struct ProductCardMedium: View {
                         .foregroundStyle(.labelsPrimary)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
-
-//                .padding(.horizontal, 8)
             }
             .padding(8)
             .frame(width: 178, height: 250)
@@ -65,12 +55,13 @@ struct ProductCardMedium: View {
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
                     .fill(.backgroundsSecondary)
             )
-            
-            // Ícone agora está alinhado ao card, não à imagem
-            FavoriteIcon(isFavorite: $product.isFavorite) {
-                favoritesViewModel.toggleFavorite(id: product.id)
-            }
-            .padding(8) // afasta do canto do card
+            FavoriteIcon(
+                isFavorite: Binding(
+                    get: { favoritesViewModel.isFavorite(id: product.id) },
+                    set: { _ in favoritesViewModel.toggleFavorite(id: product.id) }
+                )
+            )
+            .padding(8)
         }
     }
 }
