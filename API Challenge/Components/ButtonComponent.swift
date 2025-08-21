@@ -10,12 +10,12 @@ import SwiftUI
 struct ButtonComponent: View {
     
     var title: String
-    var action: ()
+    var action: () -> Void
 
     var body: some View {
         
         Button {
-            action
+            action()
         } label: {
             Text(title)
                 .font(.system(.body, weight: .semibold))
@@ -31,5 +31,5 @@ struct ButtonComponent: View {
 }
 
         #Preview {
-            ButtonComponent(title:"Add to cart", action:())
+//            ButtonComponent(title:"Add to cart", action:())
         }

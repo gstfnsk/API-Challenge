@@ -10,14 +10,14 @@ import SwiftUI
 struct DetailsView: View {
     
     @ObservedObject var favoritesViewModel: FavoritesViewModel
-
+    @EnvironmentObject var cartModel: CartViewModel
+    @Environment(\.dismiss) private var dismiss
     @Binding var product: Product
     
     init(product: Binding<Product>, favoritesViewModel: FavoritesViewModel) {
         self._product = product
         self.favoritesViewModel = favoritesViewModel
     }
-//    @State var isFavorite : Bool?
     
     var body: some View {
         VStack {
@@ -30,7 +30,7 @@ struct DetailsView: View {
                                 .background(
                                     RoundedRectangle(cornerRadius: 16)
                                         .foregroundStyle(.graysGray5))
-                                
+                            
                         } placeholder: {
                             Image("ProductPlaceholder")
                                 .resizable()
@@ -48,9 +48,8 @@ struct DetailsView: View {
                                 set: { _ in favoritesViewModel.toggleFavorite(id: product.id) }
                             )
                         )
-                            .padding(.top, 16)
-                            .padding(.trailing, 16)
-                        
+                        .padding(.top, 16)
+                        .padding(.trailing, 16)
                     }
                     VStack(alignment: .leading, spacing: 4) {
                         Text(product.title).foregroundColor(Color(.labelsPrimary))
@@ -61,17 +60,17 @@ struct DetailsView: View {
                     }
                     Text(product.description).foregroundColor(Color(.labelsSecondary))
                         .font(.system(.body, weight: .regular ))
-                    //                Spacer()
                 }
-                
             }
             
             .toolbar(.hidden, for: .tabBar)
             .padding(.vertical, 16)
             .padding(.horizontal, 16)
             
-            ButtonComponent(title: "Add to cart", action: ())
-            
+            ButtonComponent(title: "Add to cart") {
+                cartModel.addToCart(productId: product.id, amount: 1)
+                dismiss()
+            }
         }
     }
 }
