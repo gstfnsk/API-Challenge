@@ -3,22 +3,16 @@ import SwiftUI
 
 struct FavoritesView: View {
     @EnvironmentObject var favoritesVM: FavoritesViewModel
-    @State var productsVM = ProductViewModel(service: ProductService())
-    @State var selectedProduct: Product?
-
-    private var favoriteProducts: [Product] {
-        productsVM.products.filter { favoritesVM.isFavorite(id: $0.id) }
-    }
 
     var body: some View {
         VStack {
-            if favoriteProducts.isEmpty {
+            if favoritesVM.favoriteProducts.isEmpty {
                 EmptyState(title: "No favorites yet!", description: "Favorite an item and it will show up here.", image: .emptyFavorites)
             } else {
                 ScrollView {
                     LazyVStack(spacing: 12) {
-                        ForEach(favoriteProducts) { product in
-                            Button { selectedProduct = product } label: {
+                        ForEach(favoritesVM.favoriteProducts) { product in
+                            Button { favoritesVM.selectedProduct = product } label: {
                                 ProductList(product: product) // comportamento 3 (sem amount/orderDate)
                                     .contentShape(Rectangle())
                             }
@@ -31,11 +25,11 @@ struct FavoritesView: View {
             }
         }
         .navigationTitle("Favorites")
-        .task { await productsVM.loadProducts() }
-        .sheet(item: $selectedProduct) { product in
+        .task { await favoritesVM.productsVM.loadProducts() }
+        .sheet(item: $favoritesVM.selectedProduct) { product in
             NavigationStack {
-                if let index = productsVM.products.firstIndex(where: { $0.id == product.id }) {
-                    DetailsView(product: $productsVM.products[index], favoritesViewModel: favoritesVM )
+                if let index = favoritesVM.productsVM.products.firstIndex(where: { $0.id == product.id }) {
+                    DetailsView(product: $favoritesVM.productsVM.products[index], favoritesViewModel: favoritesVM )
                         .navigationTitle("Details")
                         .navigationBarTitleDisplayMode(.inline)
                         .background(Color.backgroundsPrimary)
