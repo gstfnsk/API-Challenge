@@ -32,7 +32,7 @@ struct CartView: View {
                         ForEach(cartProducts) { cartProduct in
                             let amount = cartVM.amountInCart(productId: cartProduct.id)
                             Button { selectedProduct = cartProduct } label: {
-                                ProductList(product: cartProduct, amount: amount)
+                                ProductList(product: cartProduct, cartPage: true)
                                     .contentShape(Rectangle())
                             }
                             .buttonStyle(.plain)
