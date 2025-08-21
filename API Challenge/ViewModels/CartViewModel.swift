@@ -28,11 +28,13 @@ class CartViewModel: ObservableObject {
             cart.append(newCartItem)
             dataSource.addProduct(cart: newCartItem)
         }
-        
         cart.forEach { print($0.productId) } // id dos produtos no carrinho
     }
-    
     func isInCart(id: Int) -> Bool {
             return cart.contains { $0.productId == id }
+    }
+    
+    func amountInCart(productId: Int) -> Int {
+            cart.first(where: { $0.productId == productId })?.amount ?? 0
     }
 }
