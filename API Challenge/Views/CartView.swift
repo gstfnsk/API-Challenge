@@ -41,7 +41,7 @@ struct CartView: View {
                         Text("Total:").font(.system(.subheadline, weight: .regular )).foregroundColor(Color(.labelsPrimary))
                             .frame(alignment: .bottomLeading)
                         Spacer()
-                        Text("US$: " + String(cartVM.total)).font(.system(.headline, weight: .semibold )).foregroundColor(Color(.labelsPrimary))
+                        Text("US$: " + String(cartVM.calculateTotal())).font(.system(.headline, weight: .semibold )).foregroundColor(Color(.labelsPrimary))
                             .frame(alignment: .bottomTrailing)
                     }.padding(.horizontal, 16)
                     ButtonComponent(title: "Checkout") {

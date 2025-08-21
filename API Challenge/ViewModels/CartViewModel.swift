@@ -15,8 +15,6 @@ class CartViewModel: ObservableObject {
     var selectedProduct: Product?
     private let dataSource: SwiftDataService
     
-    var total = 0.0
-    
     init(dataSource: SwiftDataService) {
         self.dataSource = dataSource
         cart = dataSource.fetchCart()
@@ -74,10 +72,13 @@ class CartViewModel: ObservableObject {
         cart.first(where: { $0.productId == productId })?.amount ?? 0
     }
     
-//    func calculateTotal() -> Double {
-//        var total = 0.0
-//        cart.forEach { product in
-//            total = total //+ product.
-//        }
-//    }
+    func calculateTotal() -> Double {
+        var total = 0.0
+        for cartItem in cart {
+            if let product = productsVM.products.first(where: { $0.id == cartItem.productId }) {
+                total += Double(cartItem.amount) * product.price
+            }
+        }
+        return total
+    }
 }
