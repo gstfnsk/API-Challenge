@@ -38,6 +38,7 @@ struct ProductList: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(product.title).font(.system(.footnote, weight: .regular )).foregroundColor(Color(.labelsPrimary))
                             .frame(maxWidth: 157, alignment: .leading)
+                        Spacer()
                         Text("US$ " + String(product.price)).font(.system(.headline, weight: .semibold )).foregroundColor(Color(.labelsPrimary))
                     }
                     
@@ -63,6 +64,7 @@ struct ProductList: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(product.title).font(.system(.footnote, weight: .regular )).foregroundColor(Color(.labelsPrimary))
                             .frame(maxWidth: 157, alignment: .leading)
+                        Spacer()
                         Text("US$ " + String(product.price)).font(.system(.headline, weight: .semibold )).foregroundColor(Color(.labelsPrimary))
                     }
                     
@@ -84,7 +86,7 @@ struct ProductList: View {
                     }
                     .frame(maxWidth: 70)
                 }.padding(.vertical, 16)
-                    .padding(.trailing, 16)
+//                    .padding(.trailing, 16)
                 
             }
             
