@@ -10,11 +10,11 @@ import SwiftUI
 struct AmountButton: View {
     
     var symbolName: String
-    var action: ()
+    var action: () -> Void
     
     var body: some View {
         Button {
-            action
+            action()
         } label: {
             Image(systemName: symbolName)
                 .padding(.vertical, 4)
@@ -32,5 +32,5 @@ struct AmountButton: View {
 }
 
     #Preview {
-        AmountButton(symbolName: "plus", action: ())
+//        AmountButton(symbolName: "plus", action: ())
     }

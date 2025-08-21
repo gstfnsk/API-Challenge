@@ -11,7 +11,14 @@ import Combine
 class FavoritesViewModel: ObservableObject {
     @Published var favorites: [Favorites] = []
     
-    private let dataSource: SwiftDataService
+    @Published var selectedProduct: Product?
+    var productsVM = ProductViewModel(service: ProductService())
+    
+    let dataSource: SwiftDataService
+    
+    var favoriteProducts: [Product] {
+        productsVM.products.filter { isFavorite(id: $0.id) }
+    }
     
     init(dataSource: SwiftDataService) {
         self.dataSource = dataSource
@@ -33,6 +40,4 @@ class FavoritesViewModel: ObservableObject {
 
             favorites.forEach { print($0.id) }
     }
-    
-    
 }
