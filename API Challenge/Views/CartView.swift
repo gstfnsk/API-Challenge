@@ -9,18 +9,12 @@ import SwiftUI
 
 struct CartView: View {
     @EnvironmentObject var cartVM: CartViewModel
-    @State var productsVM = ProductViewModel(service: ProductService())
-    
-    @State var selectedProduct: Product?
-    
-    var cartProducts: [Product] {
-        productsVM.products.filter { cartVM.isInCart(id: $0.id) }
-    }
+    var productsVM = ProductViewModel(service: ProductService())
     
     var body: some View {
         
         NavigationStack {
-            if cartProducts.isEmpty {
+            if cartVM.cartProducts.isEmpty {
                 EmptyState(
                     title: "Your cart is empty!",
                     description: "Add an item to your cart.",
@@ -29,22 +23,37 @@ struct CartView: View {
             else {
                 ScrollView {
                     LazyVStack(spacing: 12) {
-                        ForEach(cartProducts) { cartProduct in
-                            let amount = cartVM.amountInCart(productId: cartProduct.id)
-                            Button { selectedProduct = cartProduct } label: {
+                        ForEach(cartVM.cartProducts) { cartProduct in
+                            Button { cartVM.selectedProduct = cartProduct } label: {
                                 ProductList(product: cartProduct, cartPage: true)
                                     .contentShape(Rectangle())
                             }
                             .buttonStyle(.plain)
                         }
                     }
-                    .padding(.horizontal)
+//                    .padding(.horizontal)
                     .padding(.top, 16)
                 }
+                
+                VStack(spacing: 16) {
+                    Spacer()
+                    HStack {
+                        Text("Total:").font(.system(.subheadline, weight: .regular )).foregroundColor(Color(.labelsPrimary))
+                            .frame(alignment: .bottomLeading)
+                        Spacer()
+                        Text("US$: " + String(cartVM.total)).font(.system(.headline, weight: .semibold )).foregroundColor(Color(.labelsPrimary))
+                            .frame(alignment: .bottomTrailing)
+                    }.padding(.horizontal, 16)
+                    ButtonComponent(title: "Checkout") {
+                        //ir para orders
+                    }
+                    
+                }
+                    .padding(.bottom, 16)
             }
         }
         .navigationTitle("Cart")
-        .task { await productsVM.loadProducts() }
+        .task { await cartVM.productsVM.loadProducts() }
     }
 }
 #Preview {

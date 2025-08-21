@@ -11,11 +11,19 @@ import Combine
 class CartViewModel: ObservableObject {
     @Published var cart: [CartItem] = []
     
+    var productsVM = ProductViewModel(service: ProductService())
+    var selectedProduct: Product?
     private let dataSource: SwiftDataService
+    
+    var total = 0.0
     
     init(dataSource: SwiftDataService) {
         self.dataSource = dataSource
         cart = dataSource.fetchCart()
+    }
+    
+    var cartProducts: [Product] {
+        productsVM.products.filter { isInCart(id: $0.id) }
     }
     
     func subtractFromCart(productId: Int) {
@@ -65,4 +73,11 @@ class CartViewModel: ObservableObject {
     func amountInCart(productId: Int) -> Int {
         cart.first(where: { $0.productId == productId })?.amount ?? 0
     }
+    
+//    func calculateTotal() -> Double {
+//        var total = 0.0
+//        cart.forEach { product in
+//            total = total //+ product.
+//        }
+//    }
 }
