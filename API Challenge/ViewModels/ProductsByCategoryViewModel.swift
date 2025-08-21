@@ -26,13 +26,6 @@ final class ProductsByCategoryViewModel: ProductsByCategoryViewModelProtocol {
         return products.filter { $0.title.localizedStandardContains(query) }
     }
     
-    func syncFavorites(with favorites: [Favorites]) {
-        let ids = Set(favorites.map(\.id))
-        for i in products.indices {
-            products[i].isFavorite = ids.contains(products[i].id)
-        }
-    }
-    
     func load(category: ProductCategory, limit: Int = 24, skip: Int = 0) async {
         isLoading = true
         defer { isLoading = false }

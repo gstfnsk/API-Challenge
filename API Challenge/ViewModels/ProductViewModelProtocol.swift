@@ -12,7 +12,6 @@ protocol ProductViewModelProtocol {
     var products: [Product] { get }
     var isLoading: Bool { get }
     var errorMessage: String? { get }
-    func syncFavorites(with favorites: [Favorites])
     func loadProducts() async
     
 }
