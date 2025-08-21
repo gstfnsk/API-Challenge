@@ -8,7 +8,7 @@
 import SwiftData
 import Combine
 
-class FavoritesViewModel: ObservableObject {
+class FavoritesViewModel: ObservableObject, FavoritesViewModelProtocol {
     @Published var favorites: [Favorites] = []
     
     @Published var selectedProduct: Product?
@@ -20,7 +20,7 @@ class FavoritesViewModel: ObservableObject {
         productsVM.products.filter { isFavorite(id: $0.id) }
     }
     
-    init(dataSource: SwiftDataService) {
+    init(dataSource: SwiftDataServiceProtocol) {
         self.dataSource = dataSource
         favorites = dataSource.fetchFavorites()
     }
