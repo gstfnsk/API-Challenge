@@ -18,6 +18,33 @@ class CartViewModel: ObservableObject {
         cart = dataSource.fetchCart()
     }
     
+    func subtractFromCart(productId: Int) {
+        if let existingCart = cart.first(where: { $0.productId == productId }) {
+            let newAmount = existingCart.amount - 1
+            
+            if newAmount > 0 {
+                // update amount
+                dataSource.updateProductAmountInCart(product: existingCart, newAmount: newAmount)
+                existingCart.amount = newAmount
+            } else {
+                // remove completely
+                removeFromCart(productId: productId)
+            }
+        }
+    }
+    
+    func removeFromCart(productId: Int) {
+        if let index = cart.firstIndex(where: { $0.productId == productId }) {
+            let cartItem = cart[index]
+            
+            // remove from local array
+            cart.remove(at: index)
+            
+            // remove from persistence
+            dataSource.deleteFromCart(cartItem)
+        }
+    }
+    
     func addToCart(productId: Int, amount: Int) {
         if let existingCart = cart.first(where: { $0.productId == productId }) {
             // produto já está no carrinho: atualiza quantidade
@@ -30,11 +57,12 @@ class CartViewModel: ObservableObject {
         }
         cart.forEach { print($0.productId) } // id dos produtos no carrinho
     }
+    
     func isInCart(id: Int) -> Bool {
-            return cart.contains { $0.productId == id }
+        return cart.contains { $0.productId == id }
     }
     
     func amountInCart(productId: Int) -> Int {
-            cart.first(where: { $0.productId == productId })?.amount ?? 0
+        cart.first(where: { $0.productId == productId })?.amount ?? 0
     }
 }
