@@ -8,12 +8,12 @@
 import SwiftData
 import Combine
 
-class FavoritesViewModel: ObservableObject {
+class FavoritesViewModel: ObservableObject, FavoritesViewModelProtocol {
     @Published var favorites: [Favorites] = []
     
-    private let dataSource: SwiftDataService
+    private let dataSource: SwiftDataServiceProtocol
     
-    init(dataSource: SwiftDataService) {
+    init(dataSource: SwiftDataServiceProtocol) {
         self.dataSource = dataSource
         favorites = dataSource.fetchFavorites()
     }

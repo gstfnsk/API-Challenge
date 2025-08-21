@@ -15,7 +15,7 @@ class MockProductService: ProductServiceProtocol {
     
     init(shouldFail: Bool = false) {
         self.shouldFail = shouldFail
-        self.product = Product(id: 0, title: "", description: "", category: "", price: 0, thumbnail: "", isFavorite: false)
+        self.product = Product(id: 0, title: "", description: "", category: "", price: 0, thumbnail: "")
     }
     
     func fetchProduct(number: Int) async throws -> API_Challenge.Product {
@@ -28,7 +28,7 @@ class MockProductService: ProductServiceProtocol {
     
     func fetchProducts() async throws -> [API_Challenge.Product] {
         if shouldFail {
-            throw NSError(domain: #function, code: 1)
+            throw NSError(domain: #function, code: 2)
         } else {
             return [product]
         }
@@ -37,7 +37,7 @@ class MockProductService: ProductServiceProtocol {
     
     func fetchProducts(in category: API_Challenge.ProductCategory, limit: Int, skip: Int) async throws -> [API_Challenge.Product] {
         if shouldFail {
-            throw NSError(domain: #function, code: 1)
+            throw NSError(domain: #function, code: 3)
         } else {
             return [product]
         }
