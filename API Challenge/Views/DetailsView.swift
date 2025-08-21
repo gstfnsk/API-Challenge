@@ -61,7 +61,6 @@ struct DetailsView: View {
                     Text(product.description).foregroundColor(Color(.labelsSecondary))
                         .font(.system(.body, weight: .regular ))
                 }
-                
             }
             
             .toolbar(.hidden, for: .tabBar)
@@ -69,7 +68,7 @@ struct DetailsView: View {
             .padding(.horizontal, 16)
             
             ButtonComponent(title: "Add to cart") {
-                print(cartModel.addToCart(id: product.id))
+                cartModel.addToCart(productId: product.id, amount: 1)
                 dismiss()
             }
         }

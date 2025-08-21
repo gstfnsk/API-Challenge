@@ -9,7 +9,7 @@ import SwiftData
 import Combine
 
 class CartViewModel: ObservableObject {
-    @Published var cart: [Cart] = []
+    @Published var cart: [CartItem] = []
     
     private let dataSource: SwiftDataService
     
@@ -18,29 +18,21 @@ class CartViewModel: ObservableObject {
         cart = dataSource.fetchCart()
     }
     
-    func addToCart(id: Int) {
-        let currentCart: Cart
-            if let existingCart = cart.first {
-                currentCart = existingCart
-            } else {
-                currentCart = Cart(product: [:])
-                cart.append(currentCart)
-            }
+    func addToCart(productId: Int, amount: Int) {
+        if let existingCart = cart.first(where: { $0.productId == productId }) {
+            // produto já está no carrinho: atualiza quantidade
+            dataSource.updateProductAmountInCart(product: existingCart, newAmount: existingCart.amount + 1)
+        } else {
+            // produto não está: insere
+            let newCartItem = CartItem(productId: productId, amount: 1)
+            cart.append(newCartItem)
+            dataSource.addProduct(cart: newCartItem)
+        }
         
-            if let currentAmount = currentCart.product[id] {
-                currentCart.product[id] = currentAmount + 1
-            } else {
-                currentCart.product[id] = 1
-            }
-        dataSource.addProduct(cart: currentCart)
+        cart.forEach { print($0.productId) } // id dos produtos no carrinho
     }
     
-    func isOnCart(id: Int) -> Bool {
-        for c in cart {
-                if c.product.keys.contains(id) {
-                    return true
-                }
-            }
-            return false
+    func isInCart(id: Int) -> Bool {
+            return cart.contains { $0.productId == id }
     }
 }
