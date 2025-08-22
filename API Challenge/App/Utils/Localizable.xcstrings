@@ -1,12 +1,23 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Beauty" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beleza"
+          }
+        }
+      }
+    },
     "Cart" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cariinho"
+            "value" : "Carrinho"
           }
         }
       }
@@ -71,12 +82,56 @@
         }
       }
     },
+    "Fragrances" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fragrâncias"
+          }
+        }
+      }
+    },
+    "Furniture" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Móveis"
+          }
+        }
+      }
+    },
+    "Groceries" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mantimentos"
+          }
+        }
+      }
+    },
     "Home" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Página inicial"
+          }
+        }
+      }
+    },
+    "Home Decoration" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Decoração"
           }
         }
       }
@@ -95,6 +150,83 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Valor padrão"
+          }
+        }
+      }
+    },
+    "Kitchen Accessories" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utensílios de cozinha"
+          }
+        }
+      }
+    },
+    "Laptops" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notebooks"
+          }
+        }
+      }
+    },
+    "Mens Shirts" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Camisetas masculinas"
+          }
+        }
+      }
+    },
+    "Mens Shoes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calçados masculinos"
+          }
+        }
+      }
+    },
+    "Mens Watches" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Relógios masculinos"
+          }
+        }
+      }
+    },
+    "Mobile Accessories" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acessórios de celular"
+          }
+        }
+      }
+    },
+    "Motorcycle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Motocicleta"
           }
         }
       }
@@ -119,6 +251,61 @@
         }
       }
     },
+    "Skin Care" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuidados com a pele"
+          }
+        }
+      }
+    },
+    "Smartphones" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Celulares"
+          }
+        }
+      }
+    },
+    "Sports Accessories" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acessórios de esporte"
+          }
+        }
+      }
+    },
+    "Sunglasses" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Óculos de sol"
+          }
+        }
+      }
+    },
+    "Tablets" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tablets"
+          }
+        }
+      }
+    },
     "Top picks" : {
       "localizations" : {
         "pt-BR" : {
@@ -129,12 +316,99 @@
         }
       }
     },
+    "Tops" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blusas"
+          }
+        }
+      }
+    },
+    "Total:" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total:"
+          }
+        }
+      }
+    },
     "Try Again" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tentar novamente"
+          }
+        }
+      }
+    },
+    "Vehicle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veículo"
+          }
+        }
+      }
+    },
+    "Womans Bags" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bolsas femininas"
+          }
+        }
+      }
+    },
+    "Womans Dresses" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vestidos femininos"
+          }
+        }
+      }
+    },
+    "Womans Watches" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Relógios femininos"
+          }
+        }
+      }
+    },
+    "Womens Jewellery" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jóias femininas"
+          }
+        }
+      }
+    },
+    "Womens Shoes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calçados femininos"
           }
         }
       }
