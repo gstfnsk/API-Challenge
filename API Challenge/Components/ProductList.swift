@@ -6,15 +6,28 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct ProductList: View {
     
     @EnvironmentObject var cartViewModel: CartViewModel
+    @State private var orientation: UIDeviceOrientation = UIDevice.current.orientation
     
     var product: Product
     
     var cartPage: Bool?
     var orderPage: Bool?
+    
+    var maxWidthForDevice: CGFloat {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            if orientation.isPortrait {
+                return 402
+            } else if orientation.isLandscape {
+                return 500
+            }
+        }
+        return 157 // iPhone
+    }
     
     var body: some View {
         let amount = cartViewModel.amountInCart(productId: product.id)
@@ -62,7 +75,7 @@ struct ProductList: View {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(product.title).font(.system(.footnote, weight: .regular )).foregroundColor(Color(.labelsPrimary))
-                            .frame(maxWidth: 157, alignment: .leading)
+                            .frame(maxWidth: maxWidthForDevice, alignment: .leading)
                         Text("US$ " + String(product.price)).font(.system(.headline, weight: .semibold )).foregroundColor(Color(.labelsPrimary))
                     }
                     
@@ -81,17 +94,19 @@ struct ProductList: View {
                                 RoundedRectangle(cornerRadius: 8)
                                     .foregroundStyle(.fillsTertiary)
                             )
-                    }
+                    }.padding(.trailing, 16)
                     .frame(maxWidth: 70)
                 }.padding(.vertical, 16)
-                    .padding(.trailing, 16)
-                
+                    
             }
             
         }.background(
             RoundedRectangle(cornerRadius: 16)
                 .foregroundStyle(.backgroundsSecondary)
         )
+        .onRotate { newOrientation in
+            orientation = newOrientation
+        }
     }
 }
 
