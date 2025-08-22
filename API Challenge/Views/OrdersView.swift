@@ -8,15 +8,46 @@
 import SwiftUI
 
 struct OrdersView: View {
+    @EnvironmentObject var ordersVM: OrderViewModel
+    var productsVM = ProductViewModel(service: ProductService())
+
     var body: some View {
-        
         NavigationStack {
-            EmptyState(
-                title: "No orders yet!",
-                description: "Buy an item and it will show up here.",
-                image: .emptyOrders)
+            Group {
+                if ordersVM.orders.isEmpty {
+                    EmptyState(
+                        title: "Sem pedidos ainda",
+                        description: "Faça seu primeiro pedido para vê-lo aqui.",
+                        image: .emptyCart
+                    )
+                    .padding()
+                } else {
+                    ScrollView {
+                        LazyVStack(spacing: 12) {
+                            ForEach(ordersVM.orders) { order in
+                                if let product = productsVM.products.first(where: { $0.id == order.productId }) {
+                                    ProductList(
+                                        product: product,
+                                        orderPage: true,
+                                        orderHeaderText: order.orderDate.deliveryByText()
+                                    )
+                                } else {
+                                    ProductList(
+                                        product: Product(id: order.productId, title: order.title, description: "", category: "", price: order.price, thumbnail: order.thumbnail),
+                                        orderPage: true,
+                                        orderHeaderText: order.orderDate.deliveryByText()
+                                    )
+                                }
+                            }
+                        }
+                        .padding(.top, 16)
+                        .padding(.horizontal)
+                    }
+                    .contentMargins(.horizontal, 0, for: .scrollContent)
+                }
+            }
+            .navigationTitle("Orders")
         }
-        .navigationTitle("Orders")
-        
+        .task { await productsVM.loadProducts() }
     }
 }

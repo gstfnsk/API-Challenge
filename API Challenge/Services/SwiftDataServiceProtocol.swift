@@ -16,4 +16,8 @@ protocol SwiftDataServiceProtocol: AnyObject {
     func addProduct(cart: CartItem)
     func deleteFromCart(_ cart: CartItem)
     func updateProductAmountInCart(product: CartItem, newAmount: Int)
+    
+    func fetchOrders() -> [Order]
+    func addOrder(_ order: Order)
+    func deleteOrder(_ order: Order)
 }

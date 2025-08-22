@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CartView: View {
     @EnvironmentObject var cartVM: CartViewModel
+    @EnvironmentObject var ordersVM: OrderViewModel
     var productsVM = ProductViewModel(service: ProductService())
     
     var body: some View {
@@ -31,7 +32,7 @@ struct CartView: View {
                             .buttonStyle(.plain)
                         }
                     }
-//                    .padding(.horizontal)
+                    .padding(.horizontal)
                     .padding(.top, 16)
                 }
                 
@@ -45,9 +46,11 @@ struct CartView: View {
                             .frame(alignment: .bottomTrailing)
                     }.padding(.horizontal, 16)
                     ButtonComponent(title: "Checkout") {
-                        //ir para orders
+                        for product in cartVM.cartProducts {
+                            ordersVM.placeOrder(from: product)
+                        }
+                        cartVM.clear()
                     }
-                    
                 }
                     .padding(.bottom, 16)
             }
