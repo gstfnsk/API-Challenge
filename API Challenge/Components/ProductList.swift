@@ -1,4 +1,3 @@
-//
 //  ProductList.swift
 //  API Challenge
 //
@@ -6,20 +5,30 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct ProductList: View {
     @EnvironmentObject var cartViewModel: CartViewModel
+    @State private var orientation: UIDeviceOrientation = UIDevice.current.orientation
+
     var product: Product
     var cartPage: Bool = false
     var orderPage: Bool = false
-    var orderHeaderText: String? = nil  
+    var orderHeaderText: String? = nil
+
+    private var titleMaxWidth: CGFloat {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            return orientation.isLandscape ? 500 : 402
+        }
+        return 157
+    }
 
     var body: some View {
         let amount = cartViewModel.amountInCart(productId: product.id)
 
         HStack(spacing: 16) {
-            AsyncImage(url: URL(string: product.thumbnail)) { img in
-                img.resizable()
+            AsyncImage(url: URL(string: product.thumbnail)) { image in
+                image.resizable()
             } placeholder: {
                 Image("ProductPlaceholder")
                     .resizable()
@@ -35,7 +44,7 @@ struct ProductList: View {
                         Text(product.title)
                             .font(.system(.footnote, weight: .regular))
                             .foregroundColor(Color(.labelsPrimary))
-                            .frame(maxWidth: 157, alignment: .leading)
+                            .frame(maxWidth: titleMaxWidth, alignment: .leading)
                         Text("US$ " + String(product.price))
                             .font(.system(.headline, weight: .semibold))
                             .foregroundColor(Color(.labelsPrimary))
@@ -61,7 +70,7 @@ struct ProductList: View {
                         Text(product.title)
                             .font(.system(.footnote, weight: .regular))
                             .foregroundColor(Color(.labelsPrimary))
-                            .frame(maxWidth: 157, alignment: .leading)
+                            .frame(maxWidth: titleMaxWidth, alignment: .leading)
                         Text("US$ " + String(product.price))
                             .font(.system(.headline, weight: .semibold))
                     }
@@ -76,7 +85,7 @@ struct ProductList: View {
                         Text(product.title)
                             .font(.system(.footnote, weight: .regular))
                             .foregroundColor(Color(.labelsPrimary))
-                            .frame(maxWidth: 157, alignment: .leading)
+                            .frame(maxWidth: titleMaxWidth, alignment: .leading)
                         Text("US$ " + String(product.price))
                             .font(.system(.headline, weight: .semibold))
                             .foregroundColor(Color(.labelsPrimary))
@@ -92,13 +101,16 @@ struct ProductList: View {
                             .frame(width: 38, height: 38)
                             .background(RoundedRectangle(cornerRadius: 8).foregroundStyle(.fillsTertiary))
                     }
+                    .padding(.trailing, 16)
                     .frame(maxWidth: 70)
                 }
                 .padding(.vertical, 16)
-                .padding(.trailing, 16)
             }
         }
-        .frame(maxWidth: .infinity, alignment: .leading) 
+        .frame(maxWidth: .infinity, alignment: .leading)
         .background(RoundedRectangle(cornerRadius: 16).foregroundStyle(.backgroundsSecondary))
+        .onRotate { newOrientation in
+            orientation = newOrientation
+        }
     }
 }
