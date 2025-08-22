@@ -52,7 +52,14 @@
       }
     },
     "Details" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detalhes"
+          }
+        }
+      }
     },
     "Favorites" : {
       "localizations" : {
