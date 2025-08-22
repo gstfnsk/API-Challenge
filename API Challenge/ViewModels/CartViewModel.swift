@@ -13,7 +13,7 @@ class CartViewModel: ObservableObject {
     
     var productsVM = ProductViewModel(service: ProductService())
     var selectedProduct: Product?
-    private let dataSource: SwiftDataService
+    private let dataSource: SwiftDataServiceProtocol
     
     init(dataSource: SwiftDataService) {
         self.dataSource = dataSource
@@ -81,4 +81,10 @@ class CartViewModel: ObservableObject {
         }
         return total
     }
+    
+    func clear() {
+            let snapshot = cart
+            snapshot.forEach { dataSource.deleteFromCart($0) }
+            cart.removeAll(keepingCapacity: false)
+        }
 }
