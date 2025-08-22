@@ -7,9 +7,9 @@
 
 import Foundation
 
-enum ProductCategory: String, Codable, CaseIterable, Identifiable {
+enum ProductCategory: String, Codable, CaseIterable, Identifiable  {
     var id: String { rawValue }
-
+    
     case beauty = "beauty"
     case fragrances = "fragrances"
     case furniture = "furniture"
@@ -34,11 +34,12 @@ enum ProductCategory: String, Codable, CaseIterable, Identifiable {
     case womensJewellery = "womens-jewellery"
     case womensShoes = "womens-shoes"
     case womensWatches = "womens-watches"
-
+    
     var displayName: String {
-        rawValue.replacingOccurrences(of: "-", with: " ").capitalized
+        let key = rawValue.replacingOccurrences(of: "-", with: " ").capitalized
+        return NSLocalizedString(key, comment: "")
     }
-
+    
     var imageName: String {
         switch self {
         case .beauty: return "sparkles"

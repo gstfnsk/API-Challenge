@@ -22,15 +22,16 @@ struct ProductCardMedium: View {
             VStack{
                     AsyncImage(url: URL(string: product.thumbnail)) { image in
                         image.resizable()
-                        .scaledToFit()
-                        .frame(width: 161, height: 160)
+                            .scaledToFit()
+                            .frame(width: 161, height: 160, alignment: .topTrailing)
                     } placeholder: {
                         Image("ProductPlaceholder")
                             .resizable()
                             .scaledToFill()
-                            .frame(width: 161, height: 160)
-                            .background(RoundedRectangle(cornerRadius: 16).foregroundStyle(.graysGray5))
+                            .frame(width: 161, height: 160, alignment: .topTrailing)
+                            .background(RoundedRectangle(cornerRadius: 6).foregroundStyle(.graysGray5))
                     }
+                Spacer()
                 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(product.title)

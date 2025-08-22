@@ -32,7 +32,11 @@ struct ProductList: View {
             } placeholder: {
                 Image("ProductPlaceholder")
                     .resizable()
-                    .background(RoundedRectangle(cornerRadius: 8).foregroundStyle(.gray.opacity(0.3)))
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .foregroundStyle(.graysGray5)
+                    )
+
             }
             .frame(width: 78, height: 78)
             .padding(.vertical, 8)
