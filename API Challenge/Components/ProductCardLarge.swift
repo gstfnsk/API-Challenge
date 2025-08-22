@@ -31,7 +31,7 @@ struct ProductCardLarge: View {
                 .frame(width: 160, height: 160)
                 
                 VStack(alignment: .leading, spacing: 32) {
-                    Text(product.category.uppercased())
+                    Text(ProductCategory(rawValue: product.category)?.displayName.uppercased() ?? product.category.uppercased())
                         .font(.system(.footnote, weight: .regular))
                         .foregroundColor(.labelsSecondary)
                     
