@@ -26,7 +26,7 @@ struct ProductList: View {
                     .resizable()
                     .background(
                         RoundedRectangle(cornerRadius: 8)
-                            .foregroundStyle(.gray.opacity(0.3))
+                            .foregroundStyle(.graysGray5)
                     )
             }
             .frame(width: 78, height: 78)
