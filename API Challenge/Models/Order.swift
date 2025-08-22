@@ -6,12 +6,30 @@
 //
 
 import SwiftData
+import Foundation
 
 @Model
 class Order {
-    var product: [Int : String] // id do produto : data
-
-    init(product: [Int : String]) {
-        self.product = product
+    var productId: Int
+    var title: String
+    var price: Double
+    var thumbnail: String
+    var orderDate: Date
+    
+    init(productId: Int, title: String, price: Double, thumbnail: String, orderDate: Date) {
+        self.productId = productId
+        self.title = title
+        self.price = price
+        self.thumbnail = thumbnail
+        self.orderDate = orderDate
     }
+
+    convenience init(product: Product, date: Date = .init()) {
+            self.init(productId: product.id,
+                      title: product.title,
+                      price: product.price,
+                      thumbnail: product.thumbnail,
+                      orderDate: date)
+    }
+    
 }

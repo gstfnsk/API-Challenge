@@ -12,12 +12,14 @@ import SwiftUI
 struct API_ChallengeApp: App {
     @StateObject private var favoritesVM = FavoritesViewModel(dataSource: SwiftDataService())
     @StateObject private var cartVM = CartViewModel(dataSource: SwiftDataService())
+    @StateObject private var ordersVM = OrderViewModel(dataSource: SwiftDataService.shared)
 
     var body: some Scene {
         WindowGroup {
             TabBar()
                 .environmentObject(favoritesVM)
                 .environmentObject(cartVM)
+                .environmentObject(ordersVM)
         }
     }
 }

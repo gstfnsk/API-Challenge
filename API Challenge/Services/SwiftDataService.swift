@@ -78,4 +78,30 @@ class SwiftDataService: SwiftDataServiceProtocol {
            try? modelContext.save()
        }
     
+    func fetchOrders() -> [Order] {
+        do {
+            return try modelContext.fetch(FetchDescriptor<Order>())
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    func addOrder(_ order: Order) {
+        modelContext.insert(order)
+        do {
+            try modelContext.save()
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    func deleteOrder(_ order: Order) {
+        modelContext.delete(order)
+        do {
+            try modelContext.save()
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
 }
