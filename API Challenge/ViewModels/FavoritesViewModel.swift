@@ -14,7 +14,7 @@ class FavoritesViewModel: ObservableObject, FavoritesViewModelProtocol {
     @Published var selectedProduct: Product?
     var productsVM = ProductViewModel(service: ProductService())
     
-    let dataSource: SwiftDataService
+    let dataSource: SwiftDataServiceProtocol
     
     var favoriteProducts: [Product] {
         productsVM.products.filter { isFavorite(id: $0.id) }

@@ -47,6 +47,7 @@ class SwiftDataService: SwiftDataServiceProtocol {
     }
     
     func addProduct(cart: CartItem) {
+        modelContext.insert(cart)
         do {
             try modelContext.save()
         } catch {
