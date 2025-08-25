@@ -10,7 +10,6 @@ import SwiftUI
 struct CartView: View {
     @EnvironmentObject var cartVM: CartViewModel
     @EnvironmentObject var ordersVM: OrderViewModel
-    var productsVM = ProductViewModel(service: ProductService())
     
     var body: some View {
         
@@ -19,40 +18,45 @@ struct CartView: View {
                 EmptyState(
                     title: "Your cart is empty!",
                     description: "Add an item to your cart.",
-                    image: .emptyCart)
-            }
-            else {
-                ScrollView {
-                    LazyVStack(spacing: 12) {
-                        ForEach(cartVM.cartProducts) { cartProduct in
-                            Button { cartVM.selectedProduct = cartProduct } label: {
-                                ProductList(product: cartProduct, cartPage: true)
-                                    .contentShape(Rectangle())
+                    image: .emptyCart
+                )
+            } else {
+                VStack {
+                    ScrollView {
+                        LazyVStack(spacing: 12) {
+                            ForEach(cartVM.cartProducts) { cartProduct in
+                                Button { cartVM.selectedProduct = cartProduct } label: {
+                                    ProductList(product: cartProduct, cartPage: true)
+                                        .contentShape(Rectangle())
+                                }
+                                .buttonStyle(.plain)
                             }
-                            .buttonStyle(.plain)
+                        }
+                        .padding(.horizontal)
+                        .padding(.top, 16)
+                    }
+                    
+                    VStack(spacing: 16) {
+                        HStack {
+                            Text("Total:")
+                                .font(.system(.subheadline, weight: .regular))
+                                .foregroundColor(Color(.labelsPrimary))
+                            Spacer()
+                            Text("US$: " + String(format: "%.2f", cartVM.calculateTotal()))
+                                .font(.system(.headline, weight: .semibold))
+                                .foregroundColor(Color(.labelsPrimary))
+                        }
+                        .padding(.horizontal, 16)
+                        
+                        ButtonComponent(title: "Checkout") {
+                            for product in cartVM.cartProducts {
+                                ordersVM.placeOrder(from: product)
+                            }
+                            cartVM.clear()
                         }
                     }
-                    .padding(.horizontal)
-                    .padding(.top, 16)
-                }
-                
-                VStack(spacing: 16) {
-                    Spacer()
-                    HStack {
-                        Text("Total:").font(.system(.subheadline, weight: .regular )).foregroundColor(Color(.labelsPrimary))
-                            .frame(alignment: .bottomLeading)
-                        Spacer()
-                        Text("US$: " + String(cartVM.calculateTotal())).font(.system(.headline, weight: .semibold )).foregroundColor(Color(.labelsPrimary))
-                            .frame(alignment: .bottomTrailing)
-                    }.padding(.horizontal, 16)
-                    ButtonComponent(title: "Checkout") {
-                        for product in cartVM.cartProducts {
-                            ordersVM.placeOrder(from: product)
-                        }
-                        cartVM.clear()
-                    }
-                }
                     .padding(.bottom, 16)
+                }
             }
         }
         .navigationTitle("Cart")
