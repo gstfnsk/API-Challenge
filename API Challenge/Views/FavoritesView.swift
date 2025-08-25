@@ -11,7 +11,7 @@ struct FavoritesView: View {
             } else {
                 ScrollView {
                     LazyVStack(spacing: 12) {
-                        ForEach(favoritesVM.favoriteProducts) { product in
+                        ForEach(favoritesVM.filteredFavorites) { product in
                             Button { favoritesVM.selectedProduct = product } label: {
                                 ProductList(product: product) // comportamento 3 (sem amount/orderDate)
                                     .contentShape(Rectangle())
@@ -25,6 +25,7 @@ struct FavoritesView: View {
             }
         }
         .navigationTitle("Favorites")
+        .searchable(text: $favoritesVM.searchText)
         .task { await favoritesVM.productsVM.loadProducts() }
         .sheet(item: $favoritesVM.selectedProduct) { product in
             NavigationStack {

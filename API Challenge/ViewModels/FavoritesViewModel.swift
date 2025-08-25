@@ -10,6 +10,10 @@ import Combine
 
 class FavoritesViewModel: ObservableObject, FavoritesViewModelProtocol {
     @Published var favorites: [Favorites] = []
+    @Published var searchText: String = "" {
+        didSet { updateDerivedState() }
+    }
+    var uiState: CategoryUIState = .loading
     
     @Published var selectedProduct: Product?
     var productsVM = ProductViewModel(service: ProductService())
@@ -18,6 +22,12 @@ class FavoritesViewModel: ObservableObject, FavoritesViewModelProtocol {
     
     var favoriteProducts: [Product] {
         productsVM.products.filter { isFavorite(id: $0.id) }
+    }
+    
+    var filteredFavorites: [Product] {
+        let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !query.isEmpty else { return favoriteProducts }
+        return favoriteProducts.filter { $0.title.localizedCaseInsensitiveContains(query) }
     }
     
     init(dataSource: SwiftDataServiceProtocol) {
@@ -39,5 +49,9 @@ class FavoritesViewModel: ObservableObject, FavoritesViewModelProtocol {
             favorites = dataSource.fetchFavorites()
 
             favorites.forEach { print($0.id) }
+    }
+    
+    private func updateDerivedState() {
+        uiState = favorites.isEmpty ? .loaded(isEmpty: true) : .loaded(isEmpty: filteredFavorites.isEmpty)
     }
 }
