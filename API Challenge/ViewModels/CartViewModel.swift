@@ -15,7 +15,7 @@ class CartViewModel: ObservableObject {
     var selectedProduct: Product?
     private let dataSource: SwiftDataServiceProtocol
     
-    init(dataSource: SwiftDataService) {
+    init(dataSource: SwiftDataServiceProtocol) {
         self.dataSource = dataSource
         cart = dataSource.fetchCart()
     }
