@@ -18,7 +18,7 @@ final class CategoryViewModel: CategoryViewModelProtocol {
 
     private let service: CategoryServiceProtocol
 
-    init(service: CategoryServiceProtocol = CategoryService()) {
+    init(service: CategoryServiceProtocol) {
         self.service = service
     }
 

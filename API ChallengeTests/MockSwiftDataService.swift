@@ -8,17 +8,16 @@
 @testable import API_Challenge
 
 final class MockSwiftDataService: SwiftDataServiceProtocol {
+    var favoritesStore: [Favorites]
+    var cartStore: [CartItem]
 
-    private(set) var favoritesStore: [Favorites]
-    private(set) var cartStore: [CartItem]
-
-    private(set) var fetchFavoritesCount = 0
-    private(set) var fetchCartCount = 0
-    private(set) var addFavoriteCalls: [Int] = []
-    private(set) var deleteFavoriteCalls: [Int] = []
-    private(set) var addProductCalls: [CartItem] = []
-    private(set) var deleteFromCartCalls: [CartItem] = []
-    private(set) var updateAmountCalls: [(id: Int, newAmount: Int)] = []
+    var fetchFavoritesCount = 0
+    var fetchCartCount = 0
+    var addFavoriteCalls: [Int] = []
+    var deleteFavoriteCalls: [Int] = []
+    var addProductCalls: [CartItem] = []
+    var deleteFromCartCalls: [CartItem] = []
+    var updateAmountCalls: [(id: Int, newAmount: Int)] = []
 
     init(initialFavorites: [Favorites] = [], initialCart: [CartItem] = []) {
         self.favoritesStore = initialFavorites
@@ -62,5 +61,17 @@ final class MockSwiftDataService: SwiftDataServiceProtocol {
     }
 
     func updateProductAmountInCart(product: CartItem, newAmount: Int) {
+    }
+    
+    func fetchOrders() -> [API_Challenge.Order] {
+        return []
+    }
+    
+    func addOrder(_ order: API_Challenge.Order) {
+        
+    }
+    
+    func deleteOrder(_ order: API_Challenge.Order) {
+        
     }
 }
