@@ -72,6 +72,16 @@
         }
       }
     },
+    "Favorite product" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Favoritar produto"
+          }
+        }
+      }
+    },
     "Favorites" : {
       "localizations" : {
         "pt-BR" : {
@@ -176,6 +186,19 @@
         }
       }
     },
+    "Marked" : {
+
+    },
+    "Marked favorite" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marcado como favorito"
+          }
+        }
+      }
+    },
     "Mens Shirts" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -231,12 +254,55 @@
         }
       }
     },
+    "Not marked" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não marcado"
+          }
+        }
+      }
+    },
+    "Not marked favorite" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não marcado como favorito"
+          }
+        }
+      }
+    },
     "Orders" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pedidos"
+          }
+        }
+      }
+    },
+    "Price" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preço"
+          }
+        }
+      }
+    },
+    "Product image %@" : {
+
+    },
+    "Product name: %@" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nome do produto: %@"
           }
         }
       }
@@ -306,6 +372,16 @@
         }
       }
     },
+    "Tap to favorite the product" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clique para favoritar o produto"
+          }
+        }
+      }
+    },
     "Top picks" : {
       "localizations" : {
         "pt-BR" : {
@@ -343,6 +419,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tentar novamente"
+          }
+        }
+      }
+    },
+    "US$ %lf" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "R$ %lf"
           }
         }
       }

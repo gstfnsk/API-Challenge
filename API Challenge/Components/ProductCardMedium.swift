@@ -29,6 +29,7 @@ struct ProductCardMedium: View {
                             .resizable()
                             .scaledToFill()
                             .frame(width: 161, height: 160, alignment: .topTrailing)
+                            .accessibilityLabel(Text("Product image \(product.title)"))
                             .background(RoundedRectangle(cornerRadius: 6).foregroundStyle(.graysGray5))
                     }
                 Spacer()
@@ -40,8 +41,11 @@ struct ProductCardMedium: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .lineLimit(2)
                         .truncationMode(.tail)
+                        .accessibilityLabel("Product name: \(product.title)")
                     
                     Text("US$ " + String(product.price))
+                        .accessibilityLabel("Price")
+                        .accessibilityValue("US$ \(product.price)")
                         .font(.system(.headline, weight: .semibold))
                         .foregroundStyle(.labelsPrimary)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -59,6 +63,9 @@ struct ProductCardMedium: View {
                     set: { _ in favoritesViewModel.toggleFavorite(id: product.id) }
                 )
             )
+            .accessibilityLabel("Favorite product")
+            .accessibilityValue(favoritesViewModel.isFavorite(id: product.id) ? "Marked" : "Not marked")
+            .accessibilityHint("Tap to favorite the product")
             .padding(8)
         }
     }
