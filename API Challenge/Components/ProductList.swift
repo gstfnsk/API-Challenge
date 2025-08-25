@@ -10,38 +10,46 @@ import UIKit
 struct ProductList: View {
     @EnvironmentObject var cartViewModel: CartViewModel
     @State private var orientation: UIDeviceOrientation = UIDevice.current.orientation
-
+    
     var product: Product
     var cartPage: Bool = false
     var orderPage: Bool = false
     var orderHeaderText: String? = nil
-
+    
     private var titleMaxWidth: CGFloat {
         if UIDevice.current.userInterfaceIdiom == .pad {
             return orientation.isLandscape ? 500 : 402
         }
         return 157
     }
-
+    
     var body: some View {
         let amount = cartViewModel.amountInCart(productId: product.id)
-
+        
         HStack(spacing: 16) {
-            AsyncImage(url: URL(string: product.thumbnail)) { image in
-                image.resizable()
-            } placeholder: {
-                Image("ProductPlaceholder")
-                    .resizable()
-                    .background(
-                        RoundedRectangle(cornerRadius: 8)
-                            .foregroundStyle(.graysGray5)
-                    )
-
+            AsyncImage(url: URL(string: product.thumbnail)) { phase in
+                
+                if let image = phase.image {
+                    image.resizable()
+                } else if phase.error != nil {
+                    ProgressView()
+                        .onAppear {
+                            cartViewModel.refreshSoon() }
+                }
+                else {
+                    Image("ProductPlaceholder")
+                        .resizable()
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .foregroundStyle(.graysGray5)
+                        )
+                }
             }
+            .id(cartViewModel.refreshID)
             .frame(width: 78, height: 78)
             .padding(.vertical, 8)
             .padding(.leading, 8)
-
+            
             if cartPage {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
@@ -62,7 +70,7 @@ struct ProductList: View {
                 }
                 .padding(.vertical, 16)
                 .padding(.trailing, 16)
-
+                
             } else if orderPage {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
@@ -82,7 +90,7 @@ struct ProductList: View {
                 }
                 .padding(.vertical, 16)
                 .padding(.trailing, 16)
-
+                
             } else {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
