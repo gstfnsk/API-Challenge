@@ -8,6 +8,7 @@
 import XCTest
 @testable import API_Challenge
 
+@MainActor
 final class CartViewModelTests: XCTestCase {
     
     func makeCartItem(productId: Int, amount: Int) -> CartItem {

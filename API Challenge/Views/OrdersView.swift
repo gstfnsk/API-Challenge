@@ -16,8 +16,8 @@ struct OrdersView: View {
             Group {
                 if ordersVM.orders.isEmpty {
                     EmptyState(
-                        title: "Sem pedidos ainda",
-                        description: "Faça seu primeiro pedido para vê-lo aqui.",
+                        title: "No orders yet!",
+                        description: "Buy an item and it will show up here.",
                         image: .emptyCart
                     )
                     .padding()
