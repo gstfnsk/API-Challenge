@@ -8,6 +8,7 @@
 import XCTest
 @testable import API_Challenge
 
+@MainActor
 final class CartViewModelTests: XCTestCase {
     
     func makeCartItem(productId: Int, amount: Int) -> CartItem {
@@ -46,6 +47,21 @@ final class CartViewModelTests: XCTestCase {
         XCTAssertEqual(dataService.updateAmountCalls.first?.productId, 5)
         XCTAssertEqual(dataService.updateAmountCalls.first?.newAmount, 2)
         XCTAssertEqual(viewModel.amountInCart(productId: 5), 2)
+    }
+    
+    func test_subtractFromCart2() {
+        // Given
+        let cartItem = makeCartItem(productId: 5, amount: 1)
+        let dataService = MockSwiftDataService(initialCart: [cartItem])
+        let viewModel = CartViewModel(dataSource: dataService)
+
+        // When
+        viewModel.subtractFromCart(productId: 5)
+        
+        // Then
+        XCTAssertEqual(dataService.updateAmountCalls.count, 0)
+        XCTAssertFalse(viewModel.isInCart(id: 5))
+        XCTAssertTrue(viewModel.cart.isEmpty)
     }
     
     func test_removeFromCart() {
@@ -92,6 +108,18 @@ final class CartViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.cart.isEmpty)
         XCTAssertEqual(dataService.deleteFromCartCalls.count, 2)
         XCTAssertTrue(dataService.cartStore.isEmpty)
+    }
+    
+    func test_refreshSoon() {
+        // Given
+        let vm = CartViewModel(dataSource: MockSwiftDataService())
+        let initial = vm.refreshID
+
+        // When
+        vm.refreshNow()
+        
+        // Then
+        XCTAssertNotEqual(vm.refreshID, initial)
     }
     
 }

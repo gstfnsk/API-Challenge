@@ -10,6 +10,11 @@ import XCTest
 
 final class FavoritesViewModelTests: XCTestCase {
     
+    private func makeProduct(id: Int, title: String, price: Double = 10) -> Product {
+        Product(id: id, title: title, description: "", category: "cat", price: price, thumbnail: "")
+    }
+    
+    
     func test_isFavorite() {
      
         // Given
@@ -64,4 +69,26 @@ final class FavoritesViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.favorites.isEmpty)
     }
     
+    func test_filteredFavorites_trimsAndIsCaseInsensitive() {
+        
+        // Given
+        let p1 = makeProduct(id: 1, title: "Copo Térmico")
+        let p2 = makeProduct(id: 2, title: "Garrafa")
+        let dataSource = MockSwiftDataService(initialFavorites: [Favorites(id: 1), Favorites(id: 2)])
+        let vm = FavoritesViewModel(dataSource: dataSource).setProductsForTesting([p1, p2])
+            
+        // When
+        vm.searchText = "   térMICO "
+
+        // Then
+        XCTAssertEqual(vm.filteredFavorites.count, 1)
+        XCTAssertEqual(vm.filteredFavorites.first?.title, "Copo Térmico")
+    }
+}
+
+extension FavoritesViewModel {
+    func setProductsForTesting(_ products: [Product]) -> FavoritesViewModel {
+        self.productsVM.products = products
+        return self
+    }
 }

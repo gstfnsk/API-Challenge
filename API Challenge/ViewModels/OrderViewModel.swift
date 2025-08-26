@@ -11,6 +11,10 @@ import SwiftData
 final class OrderViewModel: ObservableObject, OrderViewModelProtocol {
     @Published var orders: [Order] = []
     private let dataSource: SwiftDataServiceProtocol
+    @Published var searchText: String = "" {
+        didSet { updateDerivedState() }
+    }
+    var uiState: CategoryUIState = .loading
 
     init(dataSource: SwiftDataServiceProtocol) {
         self.dataSource = dataSource
@@ -31,6 +35,18 @@ final class OrderViewModel: ObservableObject, OrderViewModelProtocol {
     func refresh() {
         orders = dataSource.fetchOrders()
     }
+    
+    var filteredOrder: [Order] {
+        let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !query.isEmpty else { return orders }
+        return orders.filter { $0.title.localizedCaseInsensitiveContains(query) }
+    }
+    
+    private func updateDerivedState() {
+        uiState = orders.isEmpty ? .loaded(isEmpty: true) : .loaded(isEmpty: orders.isEmpty)
+    }
+
+   
 }
 
 
