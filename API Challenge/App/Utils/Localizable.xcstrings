@@ -1,6 +1,16 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Add an item to your cart." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adicione um produto ao seu carrinho."
+          }
+        }
+      }
+    },
     "Beauty" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -8,6 +18,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Beleza"
+          }
+        }
+      }
+    },
+    "Buy an item and it will show up here." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compre um produto e ele aparecerá aqui."
           }
         }
       }
@@ -68,6 +88,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Detalhes"
+          }
+        }
+      }
+    },
+    "Favorite an item and it will show up here." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Favorite um produto e ele aparecerá aqui."
           }
         }
       }
@@ -187,7 +217,14 @@
       }
     },
     "Marked" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marcado"
+          }
+        }
+      }
     },
     "Marked favorite" : {
       "localizations" : {
@@ -254,6 +291,26 @@
         }
       }
     },
+    "No favorites yet!" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sem favoritos ainda!"
+          }
+        }
+      }
+    },
+    "No orders yet!" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sem pedidos ainda!"
+          }
+        }
+      }
+    },
     "Not marked" : {
       "localizations" : {
         "pt-BR" : {
@@ -295,7 +352,14 @@
       }
     },
     "Product image %@" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Imagem do produto %@"
+          }
+        }
+      }
     },
     "Product name: %@" : {
       "localizations" : {
@@ -495,6 +559,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Calçados femininos"
+          }
+        }
+      }
+    },
+    "Your cart is empty!" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seu carrinho está vazio"
           }
         }
       }

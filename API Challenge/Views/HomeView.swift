@@ -13,7 +13,7 @@ struct HomeView: View {
     @State var product: Product?
     @State var selectedProduct: Product?
     @EnvironmentObject var favoriteviewModel: FavoritesViewModel
-
+    
     let columns = [
         GridItem(.flexible(), spacing: 16),
         GridItem(.flexible(), spacing: 16)
@@ -59,7 +59,7 @@ struct HomeView: View {
                 }
                 .padding(.top)
                 .padding(.horizontal)
-                .navigationTitle("Home")
+                .navigationTitle("Home") 
             }
             .task { await viewModel.loadProducts() }
             .sheet(item: $selectedProduct) { product in
@@ -69,7 +69,6 @@ struct HomeView: View {
                             .navigationTitle("Details")
                             .navigationBarTitleDisplayMode(.inline)
                             .background(Color.backgroundsPrimary)
-                            
                     }
                 }
                 .presentationDragIndicator(.visible)

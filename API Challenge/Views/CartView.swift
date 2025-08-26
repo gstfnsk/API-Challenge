@@ -22,40 +22,44 @@ struct CartView: View {
                 )
             } else {
                 VStack {
-                    ScrollView {
-                        LazyVStack(spacing: 12) {
-                            ForEach(cartVM.cartProducts) { cartProduct in
-                                Button { cartVM.selectedProduct = cartProduct } label: {
-                                    ProductList(product: cartProduct, cartPage: true)
-                                        .contentShape(Rectangle())
+                    if cartVM.productsVM.isLoading {
+                        ProgressView()
+                    } else {
+                        ScrollView {
+                            LazyVStack(spacing: 12) {
+                                ForEach(cartVM.cartProducts) { cartProduct in
+                                    Button { cartVM.selectedProduct = cartProduct } label: {
+                                        ProductList(product: cartProduct, cartPage: true)
+                                            .contentShape(Rectangle())
+                                    }
+                                    .buttonStyle(.plain)
                                 }
-                                .buttonStyle(.plain)
                             }
+                            .padding(.horizontal)
+                            .padding(.top, 16)
                         }
-                        .padding(.horizontal)
-                        .padding(.top, 16)
-                    }
-                    
-                    VStack(spacing: 16) {
-                        HStack {
-                            Text("Total:")
-                                .font(.system(.subheadline, weight: .regular))
-                                .foregroundColor(Color(.labelsPrimary))
-                            Spacer()
-                            Text("US$: " + String(format: "%.2f", cartVM.calculateTotal()))
-                                .font(.system(.headline, weight: .semibold))
-                                .foregroundColor(Color(.labelsPrimary))
-                        }
-                        .padding(.horizontal, 16)
                         
-                        ButtonComponent(title: "Checkout") {
-                            for product in cartVM.cartProducts {
-                                ordersVM.placeOrder(from: product)
+                        VStack(spacing: 16) {
+                            HStack {
+                                Text("Total:")
+                                    .font(.system(.subheadline, weight: .regular))
+                                    .foregroundColor(Color(.labelsPrimary))
+                                Spacer()
+                                Text("US$: " + String(format: "%.2f", cartVM.calculateTotal()))
+                                    .font(.system(.headline, weight: .semibold))
+                                    .foregroundColor(Color(.labelsPrimary))
                             }
-                            cartVM.clear()
+                            .padding(.horizontal, 16)
+                            
+                            ButtonComponent(title: "Checkout") {
+                                for product in cartVM.cartProducts {
+                                    ordersVM.placeOrder(from: product)
+                                }
+                                cartVM.clear()
+                            }
                         }
+                        .padding(.bottom, 16)
                     }
-                    .padding(.bottom, 16)
                 }
             }
         }

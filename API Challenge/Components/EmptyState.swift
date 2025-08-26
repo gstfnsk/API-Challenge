@@ -9,8 +9,8 @@ import SwiftUI
 
 struct EmptyState: View {
     
-    var title: String
-    var description: String
+    var title: LocalizedStringKey
+    var description: LocalizedStringKey
     var image: ImageResource
     
     var body: some View {
