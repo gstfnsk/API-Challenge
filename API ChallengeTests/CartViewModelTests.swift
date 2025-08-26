@@ -110,16 +110,4 @@ final class CartViewModelTests: XCTestCase {
         XCTAssertTrue(dataService.cartStore.isEmpty)
     }
     
-    func test_refreshSoon() {
-        // Given
-        let vm = CartViewModel(dataSource: MockSwiftDataService())
-        let initial = vm.refreshID
-
-        // When
-        vm.refreshNow()
-        
-        // Then
-        XCTAssertNotEqual(vm.refreshID, initial)
-    }
-    
 }

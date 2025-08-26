@@ -35,3 +35,4 @@ class ProductViewModel: ProductViewModelProtocol {
     }
  
 }
+
