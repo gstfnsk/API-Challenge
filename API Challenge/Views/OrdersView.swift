@@ -18,8 +18,9 @@ struct OrdersView: View {
                 } else {
                     ScrollView {
                         LazyVStack(spacing: 12) {
-                            ForEach(ordersVM.orders) { order in
+                            ForEach(ordersVM.filteredOrder) { order in
                                 if let product = ordersVM.productList.first(where: { $0.id == order.productId }) {
+
                                     ProductList(
                                         product: product,
                                         orderPage: true,
@@ -48,6 +49,7 @@ struct OrdersView: View {
                 }
             }
             .navigationTitle("Orders")
+            .searchable(text: $ordersVM.searchText)
         }
         .task {
             await ordersVM.loadProducts()

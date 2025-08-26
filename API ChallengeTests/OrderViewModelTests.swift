@@ -70,5 +70,22 @@ final class OrderViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.orders.first?.productId, 7)
         XCTAssertGreaterThanOrEqual(dataService.fetchOrdersCount, 2)
     }
+    
+    func test_filteredOrder() {
+        
+        // Given
+        let product1 = makeProduct(id: 1, title: "Copo Térmico")
+        let product2 = makeProduct(id: 2, title: "Garrafa")
+        let dataService = MockSwiftDataService(initialOrders: [Order(product: product1), Order(product: product2)])
+        let viewModel = OrderViewModel(dataSource: dataService)
+        viewModel.refresh()
+
+        // When
+        viewModel.searchText = "   térMICO "
+
+        // Then
+        XCTAssertEqual(viewModel.filteredOrder.count, 1)
+        XCTAssertEqual(viewModel.filteredOrder.first?.title, "Copo Térmico")
+    }
 
 }
