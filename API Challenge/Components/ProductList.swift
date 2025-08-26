@@ -33,8 +33,6 @@ struct ProductList: View {
                     image.resizable()
                 } else if phase.error != nil {
                     ProgressView()
-                        .onAppear {
-                            cartViewModel.refreshSoon() }
                 }
                 else {
                     Image("ProductPlaceholder")
@@ -45,7 +43,6 @@ struct ProductList: View {
                         )
                 }
             }
-            .id(cartViewModel.refreshID)
             .frame(width: 78, height: 78)
             .padding(.vertical, 8)
             .padding(.leading, 8)

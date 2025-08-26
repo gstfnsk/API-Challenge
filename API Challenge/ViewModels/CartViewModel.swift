@@ -12,7 +12,6 @@ import SwiftUI
 @MainActor
 class CartViewModel: ObservableObject {
     @Published var cart: [CartItem] = []
-    @Published var refreshID = UUID()
     
     var productsVM = ProductViewModel(service: ProductService())
     var selectedProduct: Product?
@@ -90,15 +89,5 @@ class CartViewModel: ObservableObject {
             snapshot.forEach { dataSource.deleteFromCart($0) }
             cart.removeAll(keepingCapacity: false)
         }
-    
-    func refreshSoon() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.refreshNow()
-        }
-    }
-    
-    func refreshNow() {
-        refreshID = UUID()
-    }
     
 }

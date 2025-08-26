@@ -10,11 +10,27 @@ import SwiftData
 
 final class OrderViewModel: ObservableObject, OrderViewModelProtocol {
     @Published var orders: [Order] = []
+    var productList: [Product] = []
     private let dataSource: SwiftDataServiceProtocol
-
-    init(dataSource: SwiftDataServiceProtocol) {
+    private let productService: ProductServiceProtocol
+    var isLoading: Bool = false
+    var errorMessage: String = ""
+    
+    init(dataSource: SwiftDataServiceProtocol, productService: ProductServiceProtocol) {
         self.dataSource = dataSource
         self.orders = dataSource.fetchOrders()
+        self.productService = productService
+    }
+    
+    func loadProducts() async {
+        isLoading = true
+        
+        do {
+            productList = try await productService.fetchProducts()
+        } catch {
+            errorMessage = "Error to fetch Products: \(error.localizedDescription)"
+        }
+        isLoading = false
     }
 
     func placeOrder(from product: Product, at date: Date = .init()) {

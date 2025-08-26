@@ -64,6 +64,8 @@ struct DetailsView: View {
             }
             
             .toolbar(.hidden, for: .tabBar)
+            .toolbarBackground(Color.backgroundsSecondary, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
             .padding(.vertical, 16)
             .padding(.horizontal, 16)
             

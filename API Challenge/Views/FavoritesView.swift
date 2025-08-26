@@ -3,24 +3,28 @@ import SwiftUI
 
 struct FavoritesView: View {
     @EnvironmentObject var favoritesVM: FavoritesViewModel
-
+    
     var body: some View {
         VStack {
-            if favoritesVM.favoriteProducts.isEmpty {
-                EmptyState(title: "No favorites yet!", description: "Favorite an item and it will show up here.", image: .emptyFavorites)
+            if favoritesVM.productsVM.isLoading {
+                ProgressView()
             } else {
-                ScrollView {
-                    LazyVStack(spacing: 12) {
-                        ForEach(favoritesVM.filteredFavorites) { product in
-                            Button { favoritesVM.selectedProduct = product } label: {
-                                ProductList(product: product) // comportamento 3 (sem amount/orderDate)
-                                    .contentShape(Rectangle())
+                if favoritesVM.favoriteProducts.isEmpty {
+                    EmptyState(title: "No favorites yet!", description: "Favorite an item and it will show up here.", image: .emptyFavorites)
+                } else {
+                    ScrollView {
+                        LazyVStack(spacing: 12) {
+                            ForEach(favoritesVM.filteredFavorites) { product in
+                                Button { favoritesVM.selectedProduct = product } label: {
+                                    ProductList(product: product) // comportamento 3 (sem amount/orderDate)
+                                        .contentShape(Rectangle())
+                                }
+                                .buttonStyle(.plain)
                             }
-                            .buttonStyle(.plain)
                         }
+                        .padding(.horizontal)
+                        .padding(.top, 16)
                     }
-                    .padding(.horizontal)
-                    .padding(.top, 16)
                 }
             }
         }
