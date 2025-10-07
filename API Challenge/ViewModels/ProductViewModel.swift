@@ -14,6 +14,7 @@ class ProductViewModel: ProductViewModelProtocol {
     var products: [Product] = []
     var isLoading: Bool = false
     var errorMessage: String?
+    var selectedProduct: Product?
     
     private let service: ProductServiceProtocol
     

@@ -18,7 +18,7 @@ final class OrderViewModelTests: XCTestCase {
         
         // Given
         let dataService = MockSwiftDataService()
-        let viewModel = OrderViewModel(dataSource: dataService)
+        let viewModel = OrderViewModel(dataSource: dataService, productService: <#any ProductServiceProtocol#>)
         let product = makeProduct(id: 42, title: "Teste", price: 99.9)
         
         // When
@@ -42,7 +42,7 @@ final class OrderViewModelTests: XCTestCase {
         let order1 = Order(product: product1)
         let order2 = Order(product: product2)
         let dataService = MockSwiftDataService(initialOrders: [order1, order2])
-        let viewModel = OrderViewModel(dataSource: dataService)
+        let viewModel = OrderViewModel(dataSource: dataService, productService: <#any ProductServiceProtocol#>)
 
         // When
         viewModel.deleteOrder(order1)
@@ -57,7 +57,7 @@ final class OrderViewModelTests: XCTestCase {
         
         // Given
         let dataService = MockSwiftDataService()
-        let viewModel = OrderViewModel(dataSource: dataService)
+        let viewModel = OrderViewModel(dataSource: dataService, productService: <#any ProductServiceProtocol#>)
         XCTAssertTrue(viewModel.orders.isEmpty)
         let product = makeProduct(id: 7, title: "X", price: 5)
         dataService.ordersStore = [Order(product: product, date: Date(timeIntervalSince1970: 300))]
@@ -77,7 +77,7 @@ final class OrderViewModelTests: XCTestCase {
         let product1 = makeProduct(id: 1, title: "Copo Térmico")
         let product2 = makeProduct(id: 2, title: "Garrafa")
         let dataService = MockSwiftDataService(initialOrders: [Order(product: product1), Order(product: product2)])
-        let viewModel = OrderViewModel(dataSource: dataService)
+        let viewModel = OrderViewModel(dataSource: dataService, productService: <#any ProductServiceProtocol#>)
         viewModel.refresh()
 
         // When

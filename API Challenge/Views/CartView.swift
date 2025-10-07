@@ -45,7 +45,7 @@ struct CartView: View {
                                     .font(.system(.subheadline, weight: .regular))
                                     .foregroundColor(Color(.labelsPrimary))
                                 Spacer()
-                                Text("US$: " + String(format: "%.2f", cartVM.calculateTotal()))
+                                Text(String(localized: "price_prefix") + " "  + String(format: "%.2f", cartVM.calculateTotal()))
                                     .font(.system(.headline, weight: .semibold))
                                     .foregroundColor(Color(.labelsPrimary))
                             }
@@ -57,7 +57,9 @@ struct CartView: View {
                                 }
                                 cartVM.clear()
                             }
+                            
                         }
+                        .frame(maxWidth: cartVM.componentWidth)
                         .padding(.bottom, 16)
                     }
                 }

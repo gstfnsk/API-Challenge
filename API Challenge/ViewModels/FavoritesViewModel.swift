@@ -6,9 +6,12 @@
 //
 
 import SwiftData
+import UIKit
 import Combine
 
 class FavoritesViewModel: ObservableObject, FavoritesViewModelProtocol {
+    var orientation: UIDeviceOrientation = UIDevice.current.orientation
+
     @Published var favorites: [Favorites] = []
     @Published var searchText: String = "" {
         didSet { updateDerivedState() }
@@ -19,6 +22,13 @@ class FavoritesViewModel: ObservableObject, FavoritesViewModelProtocol {
     var productsVM = ProductViewModel(service: ProductService())
     
     let dataSource: SwiftDataServiceProtocol
+    
+    var componentWidth: CGFloat {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            return orientation.isLandscape ? 672 : 574
+        }
+        return 361
+    }
     
     var favoriteProducts: [Product] {
         productsVM.products.filter { isFavorite(id: $0.id) }

@@ -25,6 +25,7 @@ struct FavoritesView: View {
                         .padding(.horizontal)
                         .padding(.top, 16)
                     }
+//                    .frame(maxWidth: favoritesVM.componentWidth)
                 }
             }
         }
