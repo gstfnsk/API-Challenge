@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ButtonComponent: View {
     
-    var title: String
+    var title: LocalizedStringKey
     var action: () -> Void
 
     var body: some View {

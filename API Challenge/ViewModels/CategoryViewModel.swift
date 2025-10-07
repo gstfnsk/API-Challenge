@@ -10,6 +10,8 @@ import Foundation
 @MainActor
 @Observable
 final class CategoryViewModel: CategoryViewModelProtocol {
+    var featured: [ProductCategory] = [.beauty, .laptops, .tablets, .groceries]
+
     var categories: [ProductCategory] = []
     var searchText: String = "" {
         didSet { updateDerivedState() }

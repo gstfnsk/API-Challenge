@@ -43,9 +43,9 @@ struct ProductCardMedium: View {
                         .truncationMode(.tail)
                         .accessibilityLabel("Product name: \(product.title)")
                     
-                    Text("US$ " + String(product.price))
+                    Text(String(localized: "price_prefix") + " " + String(product.price))
                         .accessibilityLabel("Price")
-                        .accessibilityValue("US$ \(product.price)")
+                        .accessibilityValue(Text(String(localized: "price_prefix") + "\(product.price)"))
                         .font(.system(.headline, weight: .semibold))
                         .foregroundStyle(.labelsPrimary)
                         .frame(maxWidth: .infinity, alignment: .leading)

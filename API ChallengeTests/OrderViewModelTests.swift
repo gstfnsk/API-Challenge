@@ -61,7 +61,7 @@ final class OrderViewModelTests: XCTestCase {
         let dataService = MockSwiftDataService(initialOrders: [order1, order2])
         let productService = MockProductService()
         let viewModel = OrderViewModel(dataSource: dataService, productService: productService)
-        
+
         // When
         viewModel.deleteOrder(order1)
 

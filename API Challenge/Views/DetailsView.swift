@@ -55,7 +55,7 @@ struct DetailsView: View {
                         Text(product.title).foregroundColor(Color(.labelsPrimary))
                             .font(.system(.title3, weight: .regular )).lineLimit(2)
                             .truncationMode(.tail)
-                        Text("US$ " + String(product.price)).foregroundColor(Color(.labelsPrimary))
+                        Text(String(localized: "price_prefix") + " " + String(product.price)).foregroundColor(Color(.labelsPrimary))
                             .font(.system(.title2, weight: .bold ))
                     }
                     Text(product.description).foregroundColor(Color(.labelsSecondary))

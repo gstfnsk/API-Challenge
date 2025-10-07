@@ -10,8 +10,6 @@ import SwiftUI
 struct HomeView: View {
     
     @State var viewModel: ProductViewModel
-    @State var product: Product?
-    @State var selectedProduct: Product?
     @EnvironmentObject var favoriteviewModel: FavoritesViewModel
     
     let columns = [
@@ -32,7 +30,7 @@ struct HomeView: View {
                         if let product = viewModel.product,
                            let i = viewModel.products.firstIndex(where: { $0.id == product.id }) {
                             Button {
-                                selectedProduct = viewModel.products[i]
+                                viewModel.selectedProduct = viewModel.products[i]
                             } label: {
                                 ProductCardLarge(product: $viewModel.products[i], favoritesViewModel: favoriteviewModel)
                             }
@@ -48,7 +46,7 @@ struct HomeView: View {
                         LazyVGrid(columns: columns, spacing: 8) {
                             ForEach(viewModel.products.indices, id: \.self) { i in
                                 Button {
-                                    selectedProduct = viewModel.products[i]
+                                    viewModel.selectedProduct = viewModel.products[i]
                                 } label: {
                                     ProductCardMedium(product: $viewModel.products[i], favoritesViewModel: favoriteviewModel)
                                 }
@@ -62,7 +60,7 @@ struct HomeView: View {
                 .navigationTitle("Home") 
             }
             .task { await viewModel.loadProducts() }
-            .sheet(item: $selectedProduct) { product in
+            .sheet(item: $viewModel.selectedProduct) { product in
                 NavigationStack {
                     if let index = viewModel.products.firstIndex(where: { $0.id == product.id }) {
                         DetailsView(product: $viewModel.products[index], favoritesViewModel: favoriteviewModel)

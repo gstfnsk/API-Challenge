@@ -8,6 +8,7 @@
 import SwiftData
 import Combine
 import SwiftUI
+import UIKit
 
 @MainActor
 class CartViewModel: ObservableObject {
@@ -20,6 +21,15 @@ class CartViewModel: ObservableObject {
     init(dataSource: SwiftDataServiceProtocol) {
         self.dataSource = dataSource
         cart = dataSource.fetchCart()
+    }
+    
+    var orientation: UIDeviceOrientation = UIDevice.current.orientation
+    
+    var componentWidth: CGFloat {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            return orientation.isLandscape ? 1000 : 606
+        }
+        return 393
     }
     
     var cartProducts: [Product] {

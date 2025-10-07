@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct CategoriesView: View {
-    @State private var featured: [ProductCategory] = [.beauty, .laptops, .tablets, .groceries]
-    @Bindable var viewModel: CategoryViewModel
+    @State var viewModel: CategoryViewModel
 
     var body: some View {
         NavigationStack {
             VStack(spacing: 16) {
                 HStack {
-                    ForEach(featured) { category in
+                    ForEach(viewModel.featured) { category in
                         NavigationLink(value: category) {
                             CategoryIcon(name: category.displayName, image: category.imageName)
                                 .frame(maxWidth: .infinity)

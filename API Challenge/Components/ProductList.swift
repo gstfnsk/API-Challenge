@@ -23,6 +23,13 @@ struct ProductList: View {
         return 157
     }
     
+    private var componentWidth: CGFloat {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            return orientation.isLandscape ? 672 : 574
+        }
+        return 361
+    }
+    
     var body: some View {
         let amount = cartViewModel.amountInCart(productId: product.id)
         
@@ -54,7 +61,7 @@ struct ProductList: View {
                             .font(.system(.footnote, weight: .regular))
                             .foregroundColor(Color(.labelsPrimary))
                             .frame(maxWidth: titleMaxWidth, alignment: .leading)
-                        Text("US$ " + String(product.price))
+                        Text(String(localized: "price_prefix") + " " + String(product.price))
                             .font(.system(.headline, weight: .semibold))
                             .foregroundColor(Color(.labelsPrimary))
                     }
@@ -80,7 +87,7 @@ struct ProductList: View {
                             .font(.system(.footnote, weight: .regular))
                             .foregroundColor(Color(.labelsPrimary))
                             .frame(maxWidth: titleMaxWidth, alignment: .leading)
-                        Text("US$ " + String(product.price))
+                        Text(String(localized: "price_prefix") + " " + String(product.price))
                             .font(.system(.headline, weight: .semibold))
                     }
                     Spacer()
@@ -95,7 +102,7 @@ struct ProductList: View {
                             .font(.system(.footnote, weight: .regular))
                             .foregroundColor(Color(.labelsPrimary))
                             .frame(maxWidth: titleMaxWidth, alignment: .leading)
-                        Text("US$ " + String(product.price))
+                        Text(String(localized: "price_prefix") + " " + String(product.price))
                             .font(.system(.headline, weight: .semibold))
                             .foregroundColor(Color(.labelsPrimary))
                     }
@@ -116,7 +123,8 @@ struct ProductList: View {
                 .padding(.vertical, 16)
             }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+//        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: componentWidth, alignment: .leading)
         .background(RoundedRectangle(cornerRadius: 16).foregroundStyle(.backgroundsSecondary))
         .onRotate { newOrientation in
             orientation = newOrientation

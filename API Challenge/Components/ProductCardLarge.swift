@@ -44,9 +44,9 @@ struct ProductCardLarge: View {
                             .foregroundStyle(.labelsPrimary)
                             .accessibilityLabel("Product name: \(product.title)")
                         
-                        Text("US$ " + String(product.price))
-                            .accessibilityLabel("Price")
-                            .accessibilityValue("US$ \(product.price)")
+                        Text(String(localized: "price_prefix") + " " + String(product.price))
+                            .accessibilityLabel(Text("Price"))
+                            .accessibilityValue(Text(String(localized: "price_prefix") + " \(product.price)"))
                             .font(.system(.headline, weight: .semibold))
                             .foregroundStyle(.labelsPrimary)
                     }
